@@ -4,11 +4,16 @@ import { prisma } from "@/lib/db";
 import { createUserToken, consumeUserToken } from "@/lib/auth/tokens";
 import { hashPassword } from "@/lib/auth/password";
 import { isEmailTransportConfigured, sendEmail } from "@/lib/email/service";
+import { ServiceError } from "@/lib/errors";
 import {
   buildPasswordResetEmail,
   buildVerificationEmail,
 } from "@/lib/email/templates";
-import { registerSchema, forgotPasswordSchema, resetPasswordSchema } from "@/lib/validations/auth";
+import {
+  forgotPasswordSchema,
+  registerSchema,
+  resetPasswordSchema,
+} from "@/lib/validations/auth";
 
 export function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
@@ -27,12 +32,15 @@ export async function registerUser(input: unknown) {
   const shouldRequireEmailVerification = isEmailTransportConfigured();
 
   if (existing?.emailVerified) {
-    throw new Error("An account with that email already exists.");
+    return {
+      user: null,
+      verificationRequired: shouldRequireEmailVerification,
+    };
   }
 
   const passwordHash = await hashPassword(parsed.password);
 
-  const user =
+  let user =
     existing ??
     (await prisma.user.create({
       data: {
@@ -47,7 +55,7 @@ export async function registerUser(input: unknown) {
     }));
 
   if (existing) {
-    await prisma.user.update({
+    user = await prisma.user.update({
       where: { id: existing.id },
       data: {
         fullName: parsed.fullName,
@@ -103,13 +111,13 @@ export async function resetPassword(input: unknown) {
   const user = await getUserByEmail(parsed.email);
 
   if (!user) {
-    throw new Error("This password reset link is invalid or expired.");
+    throw new ServiceError("This password reset link is invalid or expired.");
   }
 
   const token = await consumeUserToken("reset-password", user.email, parsed.token);
 
   if (!token) {
-    throw new Error("This password reset link is invalid or expired.");
+    throw new ServiceError("This password reset link is invalid or expired.");
   }
 
   const passwordHash = await hashPassword(parsed.password);
@@ -129,7 +137,7 @@ export async function verifyUserEmail(input: { email: string; token: string }) {
   const user = await getUserByEmail(email);
 
   if (!user) {
-    throw new Error("This verification link is invalid or has already been used.");
+    throw new ServiceError("This verification link is invalid or has already been used.");
   }
 
   if (user.emailVerified) {
@@ -139,7 +147,7 @@ export async function verifyUserEmail(input: { email: string; token: string }) {
   const token = await consumeUserToken("verify-email", email, input.token);
 
   if (!token) {
-    throw new Error("This verification link is invalid or has already been used.");
+    throw new ServiceError("This verification link is invalid or has already been used.");
   }
 
   const updated = await prisma.user.update({

@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/auth/session";
 import { listLeadSubmissionsForAdmin } from "@/lib/services/lead-submissions";
 import { SubmissionStatusBadge } from "@/components/account/SubmissionStatusBadge";
 import { formatStableDate } from "@/lib/format/date";
+import { normalizePage } from "@/lib/pagination";
 import { odooSyncStatuses, submissionStatuses, submissionTypes } from "@/lib/validations/submissions";
 
 function toneFor(value: string) {
@@ -32,11 +33,37 @@ export default async function AdminSubmissionsPage({
     status?: string;
     odooSyncStatus?: string;
     query?: string;
+    page?: string;
   }>;
 }) {
   await requireAdmin();
   const params = await searchParams;
-  const submissions = await listLeadSubmissionsForAdmin(params);
+  const submissions = await listLeadSubmissionsForAdmin({
+    ...params,
+    page: normalizePage(params.page),
+  });
+  const buildAdminPageHref = (page: number) => {
+    const query = new URLSearchParams();
+
+    if (params.query) {
+      query.set("query", params.query);
+    }
+    if (params.type) {
+      query.set("type", params.type);
+    }
+    if (params.status) {
+      query.set("status", params.status);
+    }
+    if (params.odooSyncStatus) {
+      query.set("odooSyncStatus", params.odooSyncStatus);
+    }
+    if (page > 1) {
+      query.set("page", String(page));
+    }
+
+    const search = query.toString();
+    return search ? `/admin/submissions?${search}` : "/admin/submissions";
+  };
 
   return (
     <>
@@ -101,6 +128,10 @@ export default async function AdminSubmissionsPage({
             </button>
           </form>
 
+          <p className="mb-4 text-xs uppercase tracking-wider text-muted-foreground">
+            Showing {submissions.items.length} of {submissions.total} submissions
+          </p>
+
           <div className="overflow-x-auto rounded-sm border border-brand-sand/20 bg-white shadow-sm">
             <table className="min-w-full">
               <thead className="border-b border-brand-sand/20 text-left text-xs uppercase tracking-wider text-muted-foreground">
@@ -114,7 +145,7 @@ export default async function AdminSubmissionsPage({
                 </tr>
               </thead>
               <tbody>
-                {submissions.map((submission) => (
+                {submissions.items.map((submission) => (
                   <tr key={submission.id} className="border-b border-brand-sand/10 text-sm text-brand-charcoal last:border-b-0">
                     <td className="px-6 py-5">
                       <div className="font-medium">{submission.fullName}</div>
@@ -144,7 +175,7 @@ export default async function AdminSubmissionsPage({
                     </td>
                   </tr>
                 ))}
-                {submissions.length === 0 ? (
+                {submissions.items.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-10 text-center text-sm text-muted-foreground">
                       No submissions matched those filters.
@@ -154,6 +185,36 @@ export default async function AdminSubmissionsPage({
               </tbody>
             </table>
           </div>
+
+          {submissions.totalPages > 1 ? (
+            <div className="mt-6 flex items-center justify-between text-sm text-muted-foreground">
+              <span>
+                Page {submissions.page} of {submissions.totalPages}
+              </span>
+              <div className="flex gap-4">
+                {submissions.page > 1 ? (
+                  <Link
+                    href={buildAdminPageHref(submissions.page - 1)}
+                    className="text-brand-bronze underline underline-offset-4"
+                  >
+                    Previous
+                  </Link>
+                ) : (
+                  <span className="opacity-50">Previous</span>
+                )}
+                {submissions.page < submissions.totalPages ? (
+                  <Link
+                    href={buildAdminPageHref(submissions.page + 1)}
+                    className="text-brand-bronze underline underline-offset-4"
+                  >
+                    Next
+                  </Link>
+                ) : (
+                  <span className="opacity-50">Next</span>
+                )}
+              </div>
+            </div>
+          ) : null}
         </Container>
       </Section>
     </>

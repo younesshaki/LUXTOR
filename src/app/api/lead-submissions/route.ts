@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getCurrentSession } from "@/lib/auth/session";
+import { getErrorResponse } from "@/lib/errors";
 import { getClientIp, MemoryRateLimiter } from "@/lib/security/rate-limit";
 import { verifyTurnstileToken } from "@/lib/security/turnstile";
 import { createLeadSubmission } from "@/lib/services/lead-submissions";
@@ -46,9 +47,6 @@ export async function POST(request: Request) {
       { status: 201 }
     );
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "We could not save your request right now.";
-
-    return NextResponse.json({ error: message }, { status: 400 });
+    return getErrorResponse(error, "We could not save your request right now.", 400);
   }
 }

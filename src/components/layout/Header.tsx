@@ -16,11 +16,12 @@ const HEADER_ZONE_HEIGHT = 120;
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const [hasDarkSection, setHasDarkSection] = useState(false);
   const isDark = pathname === "/" || hasDarkSection;
   const accountHref = status === "authenticated" ? "/account" : "/account/login";
   const accountLabel = status === "authenticated" ? "My Account" : "Sign in";
+  const isAdmin = session?.user?.role === "admin";
 
   useEffect(() => {
     const intersecting = new Set<Element>();
@@ -68,6 +69,13 @@ export function Header() {
         )}>
           <span className="hidden sm:inline">{contactInfo.hours}</span>
           <div className="ml-auto flex items-center gap-4 sm:gap-5">
+            {isAdmin ? (
+              <Link href="/admin">
+                <span className="bg-red-600 text-white text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded">
+                  Dashboard
+                </span>
+              </Link>
+            ) : null}
             <Link
               href={accountHref}
               className={cn(

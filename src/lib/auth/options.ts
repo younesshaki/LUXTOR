@@ -8,9 +8,15 @@ import { getUserByEmail } from "@/lib/services/users";
 import { isEmailTransportConfigured } from "@/lib/email/service";
 import { loginSchema } from "@/lib/validations/auth";
 
+const authSecret = process.env.NEXTAUTH_SECRET;
+
+if (process.env.NODE_ENV === "production" && !authSecret) {
+  throw new Error("NEXTAUTH_SECRET must be set in production.");
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  secret: process.env.NEXTAUTH_SECRET ?? "luxtor-development-secret",
+  secret: authSecret ?? "luxtor-development-secret",
   session: {
     strategy: "jwt",
   },

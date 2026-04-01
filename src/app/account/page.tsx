@@ -7,6 +7,7 @@ import { listLeadSubmissionsForUser } from "@/lib/services/lead-submissions";
 import { SubmissionStatusBadge } from "@/components/account/SubmissionStatusBadge";
 import { SignOutButton } from "@/components/account/SignOutButton";
 import { formatStableDate } from "@/lib/format/date";
+import { normalizePage } from "@/lib/pagination";
 
 function statusTone(status: string) {
   switch (status) {
@@ -24,9 +25,24 @@ function statusTone(status: string) {
   }
 }
 
-export default async function AccountPage() {
+function buildAccountPageHref(page: number) {
+  if (page <= 1) {
+    return "/account";
+  }
+
+  return `/account?page=${page}`;
+}
+
+export default async function AccountPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const session = await requireUser();
-  const submissions = await listLeadSubmissionsForUser(session.user.id);
+  const params = await searchParams;
+  const submissions = await listLeadSubmissionsForUser(session.user.id, {
+    page: normalizePage(params.page),
+  });
 
   return (
     <>
@@ -82,7 +98,11 @@ export default async function AccountPage() {
                 </Link>
               </div>
 
-              {submissions.length === 0 ? (
+              <p className="mt-4 text-xs uppercase tracking-wider text-muted-foreground">
+                Showing {submissions.items.length} of {submissions.total} requests
+              </p>
+
+              {submissions.items.length === 0 ? (
                 <div className="mt-8 rounded-sm border border-dashed border-brand-sand/30 p-8 text-sm text-muted-foreground">
                   No requests yet. Submit a quote or contact form and it will show up here.
                 </div>
@@ -98,7 +118,7 @@ export default async function AccountPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {submissions.map((submission) => (
+                      {submissions.items.map((submission) => (
                         <tr key={submission.id} className="rounded-sm bg-brand-cream/20 text-sm text-brand-charcoal">
                           <td className="px-4 py-4 capitalize">{submission.type}</td>
                           <td className="px-4 py-4">
@@ -120,6 +140,36 @@ export default async function AccountPage() {
                   </table>
                 </div>
               )}
+
+              {submissions.totalPages > 1 ? (
+                <div className="mt-6 flex items-center justify-between text-sm text-muted-foreground">
+                  <span>
+                    Page {submissions.page} of {submissions.totalPages}
+                  </span>
+                  <div className="flex gap-4">
+                    {submissions.page > 1 ? (
+                      <Link
+                        href={buildAccountPageHref(submissions.page - 1)}
+                        className="text-brand-bronze underline underline-offset-4"
+                      >
+                        Previous
+                      </Link>
+                    ) : (
+                      <span className="opacity-50">Previous</span>
+                    )}
+                    {submissions.page < submissions.totalPages ? (
+                      <Link
+                        href={buildAccountPageHref(submissions.page + 1)}
+                        className="text-brand-bronze underline underline-offset-4"
+                      >
+                        Next
+                      </Link>
+                    ) : (
+                      <span className="opacity-50">Next</span>
+                    )}
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </Container>

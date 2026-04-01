@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { getErrorResponse } from "@/lib/errors";
 import { getClientIp, MemoryRateLimiter } from "@/lib/security/rate-limit";
 import { resetPassword } from "@/lib/services/users";
 
@@ -24,9 +25,6 @@ export async function POST(request: Request) {
       message: "Your password has been reset. You can now sign in.",
     });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Unable to reset your password.";
-
-    return NextResponse.json({ error: message }, { status: 400 });
+    return getErrorResponse(error, "Unable to reset your password.", 400);
   }
 }

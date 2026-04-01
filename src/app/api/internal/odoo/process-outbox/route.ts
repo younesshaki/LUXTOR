@@ -1,5 +1,8 @@
+import { timingSafeEqual } from "node:crypto";
+
 import { NextResponse } from "next/server";
 
+import { getErrorResponse } from "@/lib/errors";
 import { processOdooOutbox } from "@/lib/services/lead-submissions";
 
 function hasValidSecret(request: Request) {
@@ -9,7 +12,18 @@ function hasValidSecret(request: Request) {
   }
 
   const header = request.headers.get("x-internal-cron-secret");
-  return header === expected;
+  if (!header) {
+    return false;
+  }
+
+  const actualBuffer = Buffer.from(header);
+  const expectedBuffer = Buffer.from(expected);
+
+  if (actualBuffer.length !== expectedBuffer.length) {
+    return false;
+  }
+
+  return timingSafeEqual(actualBuffer, expectedBuffer);
 }
 
 export async function POST(request: Request) {
@@ -17,6 +31,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const result = await processOdooOutbox();
-  return NextResponse.json(result);
+  try {
+    const result = await processOdooOutbox();
+    return NextResponse.json(result);
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }

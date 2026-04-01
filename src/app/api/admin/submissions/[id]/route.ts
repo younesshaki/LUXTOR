@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getCurrentSession } from "@/lib/auth/session";
+import { getErrorResponse } from "@/lib/errors";
 import {
   getLeadSubmissionForAdmin,
   updateLeadSubmissionByAdmin,
@@ -11,20 +12,24 @@ export async function GET(
   _request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
-  const session = await getCurrentSession();
+  try {
+    const session = await getCurrentSession();
 
-  if (!session?.user?.id || session.user.role !== "admin") {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (!session?.user?.id || session.user.role !== "admin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const { id } = await context.params;
+    const submission = await getLeadSubmissionForAdmin(id);
+
+    if (!submission) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ submission });
+  } catch (error) {
+    return getErrorResponse(error);
   }
-
-  const { id } = await context.params;
-  const submission = await getLeadSubmissionForAdmin(id);
-
-  if (!submission) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
-
-  return NextResponse.json({ submission });
 }
 
 export async function PATCH(
@@ -49,9 +54,6 @@ export async function PATCH(
 
     return NextResponse.json({ submission: updated });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Unable to update the submission.";
-
-    return NextResponse.json({ error: message }, { status: 400 });
+    return getErrorResponse(error, "Unable to update the submission.", 400);
   }
 }

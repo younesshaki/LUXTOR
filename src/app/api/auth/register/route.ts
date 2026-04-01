@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { getErrorResponse } from "@/lib/errors";
 import { getClientIp, MemoryRateLimiter } from "@/lib/security/rate-limit";
 import { registerUser } from "@/lib/services/users";
 
@@ -26,9 +27,6 @@ export async function POST(request: Request) {
         : "Account created. You can sign in right away.",
     });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Unable to create your account right now.";
-
-    return NextResponse.json({ error: message }, { status: 400 });
+    return getErrorResponse(error, "Unable to create your account right now.", 400);
   }
 }
