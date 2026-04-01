@@ -15,7 +15,7 @@ export function BrandIntro() {
           <FadeIn>
             <div className="relative aspect-[4/5] bg-brand-cream rounded-sm overflow-hidden">
               <Image
-                src="/images/brand-intro.svg"
+                src="/images/inspiration/inspiration-5.jpg"
                 alt="Curated fabric selection at LUXTOR showroom"
                 fill
                 className="object-cover"

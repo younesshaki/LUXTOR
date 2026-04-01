@@ -91,7 +91,16 @@
   }
   html {
     @apply font-sans;
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
   }
 
   /* Heading defaults */

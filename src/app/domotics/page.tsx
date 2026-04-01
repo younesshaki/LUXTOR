@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
@@ -9,6 +10,15 @@ export const metadata: Metadata = {
   description:
     "Smart home automation systems from LUXTOR. Control your blinds, curtains, awnings and pergolas with motorized motors and voice integration.",
 };
+
+const domotics = [
+  { src: "/images/domotics/domotics-1.jpg", alt: "Smart home control panel integrated into a modern wall" },
+  { src: "/images/domotics/domotics-2.jpg", alt: "Tablet interface controlling connected devices in a living room" },
+  { src: "/images/domotics/domotics-3.jpg", alt: "Voice and app-enabled smart lighting and blinds setup" },
+  { src: "/images/domotics/domotics-4.jpg", alt: "Minimal smart home dashboard in a premium residential interior" },
+  { src: "/images/domotics/domotics-5.jpg", alt: "Modern automation scene with connected comfort systems" },
+  { src: "/images/domotics/domotics-6.jpg", alt: "Mobile-first home automation controls for window treatments" },
+];
 
 export default function DomoticsPage() {
   return (
@@ -24,16 +34,22 @@ export default function DomoticsPage() {
         </Container>
       </Section>
 
-      {/* Placeholder for domotics grid */}
+      {/* Domotics grid */}
       <Section>
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, i) => (
+            {domotics.map((system, i) => (
               <div
                 key={i}
-                className="aspect-[3/4] rounded-sm bg-brand-cream/50 border border-brand-sand/20 flex items-center justify-center"
+                className="aspect-[3/4] relative rounded-sm overflow-hidden border border-brand-sand/20 bg-brand-cream/50"
               >
-                <p className="text-sm text-muted-foreground">System {i + 1}</p>
+                <Image
+                  src={system.src}
+                  alt={system.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
               </div>
             ))}
           </div>

@@ -48,7 +48,7 @@ export function BentoGrid() {
           <motion.div className="col-span-2 row-span-2" custom={0} variants={bentoVariants}>
             <div className="relative aspect-square md:aspect-auto md:h-[500px] overflow-hidden bg-brand-sand/20 rounded-lg group">
               <Image
-                src="/images/hero.svg"
+                src="/images/accessories/accessory-4.jpg"
                 alt="Craftsmanship"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"

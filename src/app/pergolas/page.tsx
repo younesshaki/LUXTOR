@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
@@ -9,6 +10,15 @@ export const metadata: Metadata = {
   description:
     "Luxury bioclimatic and traditional pergolas from LUXTOR. Create your perfect outdoor sanctuary with motorized louvre systems and premium design.",
 };
+
+const pergolas = [
+  { src: "/images/pergolas/pergola-1.jpg", alt: "Coastal designer pergola with open white slats" },
+  { src: "/images/pergolas/pergola-2.jpg", alt: "Modern bioclimatic pergola with motorized louvres" },
+  { src: "/images/pergolas/pergola-3.jpg", alt: "Minimal white pergola attached to a luxury home" },
+  { src: "/images/pergolas/pergola-4.jpg", alt: "Architectural pergola structure near the shoreline" },
+  { src: "/images/pergolas/pergola-5.jpg", alt: "Curved pergola design overlooking the sea" },
+  { src: "/images/pergolas/pergola-6.jpg", alt: "Premium pergola walkway with sculptural shadow lines" },
+];
 
 export default function PergolaPage() {
   return (
@@ -24,16 +34,22 @@ export default function PergolaPage() {
         </Container>
       </Section>
 
-      {/* Placeholder for pergolas grid */}
+      {/* Pergolas grid */}
       <Section>
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, i) => (
+            {pergolas.map((pergola, i) => (
               <div
                 key={i}
-                className="aspect-[3/4] rounded-sm bg-brand-cream/50 border border-brand-sand/20 flex items-center justify-center"
+                className="aspect-[3/4] relative rounded-sm overflow-hidden border border-brand-sand/20 bg-brand-cream/50"
               >
-                <p className="text-sm text-muted-foreground">Pergola {i + 1}</p>
+                <Image
+                  src={pergola.src}
+                  alt={pergola.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
               </div>
             ))}
           </div>
