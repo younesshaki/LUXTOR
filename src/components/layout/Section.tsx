@@ -5,6 +5,7 @@ interface SectionProps {
   className?: string;
   id?: string;
   variant?: "default" | "cream" | "dark";
+  headerTheme?: "light" | "dark";
 }
 
 export function Section({
@@ -12,10 +13,12 @@ export function Section({
   className,
   id,
   variant = "default",
+  headerTheme,
 }: SectionProps) {
   return (
     <section
       id={id}
+      data-header-theme={headerTheme}
       className={cn(
         "section-padding",
         {

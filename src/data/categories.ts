@@ -1,4 +1,11 @@
-export const featuredCategories = [
+export interface Category {
+  title: string;
+  description: string;
+  image: string;
+  href: string;
+}
+
+export const featuredCategories: Category[] = [
   {
     title: "Curtains",
     description: "Luxurious fabrics tailored to perfection for every window.",
@@ -12,6 +19,18 @@ export const featuredCategories = [
     href: "/collections#blinds",
   },
   {
+    title: "Awnings",
+    description: "Extend your living space with premium outdoor awnings.",
+    image: "/images/category-awnings.svg",
+    href: "/awnings",
+  },
+  {
+    title: "Pergolas",
+    description: "Create a stunning outdoor sanctuary with designer pergolas.",
+    image: "/images/category-pergolas.svg",
+    href: "/pergolas",
+  },
+  {
     title: "Sheers & Voiles",
     description: "Delicate layers that filter light with ethereal beauty.",
     image: "/images/category-sheers.svg",
@@ -23,7 +42,9 @@ export const featuredCategories = [
     image: "/images/category-decor.svg",
     href: "/collections#decor",
   },
-] as const;
+];
+
+export const allCategories: Category[] = featuredCategories;
 
 export const whyChooseUs = [
   {

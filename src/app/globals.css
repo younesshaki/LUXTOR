@@ -78,7 +78,8 @@
 
   /* Typography scale */
   --font-heading: var(--font-cormorant);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-lato);
+  --font-display: var(--font-playfair);
 }
 
 @layer base {

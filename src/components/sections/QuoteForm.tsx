@@ -74,6 +74,10 @@ export function QuoteForm() {
             <option value="curtains">Custom Curtains</option>
             <option value="blinds">Blinds</option>
             <option value="sheers">Sheers & Voiles</option>
+            <option value="awnings">Awnings</option>
+            <option value="pergolas">Pergolas</option>
+            <option value="accessories">Accessories</option>
+            <option value="domotics">Smart Home Control</option>
             <option value="decor">Home Decor</option>
             <option value="consultation">Design Consultation</option>
             <option value="other">Other</option>
