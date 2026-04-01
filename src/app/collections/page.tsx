@@ -39,7 +39,6 @@ export default function CollectionsPage() {
             label="Blinds"
             title="Tailored Light Control"
             description="From sleek venetians to soft-filtering modern systems, our blinds collection balances privacy, texture, and refined architectural detail."
-            className="mb-12"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {blinds.map((blind, i) => (

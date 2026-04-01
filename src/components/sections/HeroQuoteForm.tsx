@@ -1,27 +1,32 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { serviceOptions } from "@/data/services";
+import { TurnstileField } from "@/components/forms/TurnstileField";
+import { useLeadSubmission } from "@/components/forms/useLeadSubmission";
 
 interface HeroQuoteFormProps {
   variant?: "panel" | "section";
 }
 
 export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { loading, error, result, setError, submitSubmission } = useLeadSubmission();
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     suburb: "",
     phone: "",
+    serviceInterest: "",
     message: "",
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -31,25 +36,34 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+    setError(null);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      await submitSubmission({
+        type: "quote",
+        fullName: formData.fullName,
+        email: formData.email,
+        suburb: formData.suburb,
+        phone: formData.phone,
+        serviceInterest: formData.serviceInterest,
+        message: formData.message,
+        sourcePage: "/",
+        sourceVariant: isPanel ? "hero-panel" : "hero-section",
+        turnstileToken,
+      });
 
-    setLoading(false);
-    setIsSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
       setFormData({
-        name: "",
+        fullName: "",
         email: "",
         suburb: "",
         phone: "",
+        serviceInterest: "",
         message: "",
       });
-    }, 3000);
+      setTurnstileToken("");
+    } catch {
+      return;
+    }
   };
 
   const isPanel = variant === "panel";
@@ -63,7 +77,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
       )}
     >
       <AnimatePresence mode="wait">
-        {!isSubmitted ? (
+        {!result ? (
           <motion.div
             key="form"
             initial={{ opacity: 1 }}
@@ -97,9 +111,9 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
               <div className={isPanel ? "" : "grid grid-cols-1 md:grid-cols-2 gap-4"}>
                 <input
                   type="text"
-                  name="name"
+                  name="fullName"
                   placeholder="Your Name *"
-                  value={formData.name}
+                  value={formData.fullName}
                   onChange={handleChange}
                   required
                   className={cn(
@@ -162,6 +176,26 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                 />
               </div>
 
+              <select
+                name="serviceInterest"
+                value={formData.serviceInterest}
+                onChange={handleChange}
+                required
+                className={cn(
+                  "flex h-12 w-full px-4 py-3 rounded-sm text-sm focus:outline-none focus:ring-2 focus:ring-offset-0",
+                  isPanel
+                    ? "bg-white/10 border border-white/20 text-white focus:ring-brand-bronze"
+                    : "bg-white border border-brand-sand/20 text-brand-charcoal focus:ring-brand-bronze"
+                )}
+              >
+                <option value="">Select a service *</option>
+                {serviceOptions.map((option) => (
+                  <option key={option.value} value={option.value} className="text-brand-charcoal">
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+
               {!isPanel && (
                 <textarea
                   name="message"
@@ -173,10 +207,11 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                 />
               )}
 
-              {/* reCAPTCHA placeholder */}
-              <div className="text-xs text-white/40 py-2">
-                {/* TODO: add reCAPTCHA site key */}
-              </div>
+              <TurnstileField onTokenChange={setTurnstileToken} />
+
+              {error ? (
+                <p className={cn("text-sm", isPanel ? "text-red-200" : "text-red-600")}>{error}</p>
+              ) : null}
 
               <button
                 type="submit"
@@ -221,8 +256,17 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                 isPanel ? "text-white/70" : "text-brand-charcoal/70"
               )}
             >
-              We'll be in touch soon with your free quote.
+              We&apos;ll be in touch soon with your free quote.
             </p>
+            {result.suggestAccountCreation ? (
+              <p className={cn("mt-4 text-sm", isPanel ? "text-white/80" : "text-brand-charcoal/80")}>
+                Want to track your requests?{" "}
+                <Link href="/account/register" className="underline underline-offset-4">
+                  Create an account
+                </Link>
+                .
+              </p>
+            ) : null}
           </motion.div>
         )}
       </AnimatePresence>

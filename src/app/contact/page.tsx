@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { contactInfo } from "@/data/navigation";
+import { ContactForm } from "@/components/forms/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -90,10 +91,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Map placeholder */}
-            <div className="aspect-square lg:aspect-auto rounded-sm bg-brand-cream/50 border border-brand-sand/20 flex items-center justify-center">
-              <p className="text-sm text-muted-foreground">Map / Contact Form</p>
-            </div>
+            <ContactForm />
           </div>
         </Container>
       </Section>

@@ -9,6 +9,8 @@ import { Section } from "@/components/layout/Section";
 import { ArrowRight } from "lucide-react";
 
 const customEase = cubicBezier(0.25, 0.46, 0.45, 0.94);
+const testimonialQuote =
+  "\"They understood my vision and brought it to life perfectly. Exceptional quality and service.\"";
 
 const bentoVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.95 },
@@ -130,8 +132,7 @@ export function BentoGrid() {
           <motion.div className="col-span-2" custom={4} variants={bentoVariants}>
             <div className="bg-white rounded-lg p-6 md:p-8 border-l-4 border-brand-bronze shadow-sm hover:shadow-md transition-shadow duration-300">
               <p className="font-heading text-lg md:text-xl text-brand-charcoal mb-4 italic">
-                "They understood my vision and brought it to life perfectly.
-                Exceptional quality and service."
+                {testimonialQuote}
               </p>
               <p className="text-sm text-brand-charcoal/60 font-medium">
                 — Sarah M., Los Angeles

@@ -8,7 +8,6 @@ import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { FadeInStagger, staggerItem } from "@/components/shared/MotionWrapper";
 import { featuredCategories } from "@/data/categories";
 import { slideInVariants } from "@/lib/animations";
 

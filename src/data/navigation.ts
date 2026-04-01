@@ -71,6 +71,7 @@ export const footerHelp = [
   { label: "Contact Us", href: "/contact" },
   { label: "Find a Showroom", href: "/showrooms" },
   { label: "Request a Quote", href: "/quote" },
+  { label: "My Account", href: "/account" },
   { label: "FAQs", href: "/faqs" },
 ];
 

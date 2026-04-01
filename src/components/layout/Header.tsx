@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { Menu, X, Phone, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Container } from "./Container";
 import { navItems, contactInfo } from "@/data/navigation";
@@ -15,10 +16,13 @@ const HEADER_ZONE_HEIGHT = 120;
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const [isDark, setIsDark] = useState(pathname === "/");
+  const { status } = useSession();
+  const [hasDarkSection, setHasDarkSection] = useState(false);
+  const isDark = pathname === "/" || hasDarkSection;
+  const accountHref = status === "authenticated" ? "/account" : "/account/login";
+  const accountLabel = status === "authenticated" ? "My Account" : "Sign in";
 
   useEffect(() => {
-    setIsDark(pathname === "/");
     const intersecting = new Set<Element>();
     const rootMarginBottom = Math.max(0, window.innerHeight - HEADER_ZONE_HEIGHT);
 
@@ -31,7 +35,7 @@ export function Header() {
             intersecting.delete(entry.target);
           }
         });
-        setIsDark(intersecting.size > 0);
+        setHasDarkSection(intersecting.size > 0);
       },
       { rootMargin: `0px 0px -${rootMarginBottom}px 0px`, threshold: 0 }
     );
@@ -43,6 +47,7 @@ export function Header() {
     return () => {
       observer.disconnect();
       intersecting.clear();
+      setHasDarkSection(false);
     };
   }, [pathname]);
 
@@ -62,16 +67,28 @@ export function Header() {
           isDark ? "text-white/60" : "text-brand-charcoal-light"
         )}>
           <span className="hidden sm:inline">{contactInfo.hours}</span>
-          <a
-            href={`tel:${contactInfo.phone}`}
-            className={cn(
-              "flex items-center gap-1.5 ml-auto transition-colors",
-              isDark ? "hover:text-brand-bronze" : "hover:text-brand-bronze"
-            )}
-          >
-            <Phone className="h-3 w-3" />
-            {contactInfo.phone}
-          </a>
+          <div className="ml-auto flex items-center gap-4 sm:gap-5">
+            <Link
+              href={accountHref}
+              className={cn(
+                "inline-flex items-center gap-1.5 transition-colors",
+                isDark ? "hover:text-brand-bronze" : "hover:text-brand-bronze"
+              )}
+            >
+              <User className="h-3 w-3" />
+              {accountLabel}
+            </Link>
+            <a
+              href={`tel:${contactInfo.phone}`}
+              className={cn(
+                "flex items-center gap-1.5 transition-colors",
+                isDark ? "hover:text-brand-bronze" : "hover:text-brand-bronze"
+              )}
+            >
+              <Phone className="h-3 w-3" />
+              {contactInfo.phone}
+            </a>
+          </div>
         </Container>
       </div>
 
@@ -170,6 +187,16 @@ export function Header() {
                   )}
                 >
                   Request a Quote
+                </Link>
+              </div>
+              <div className="mt-4 px-4">
+                <Link
+                  href={accountHref}
+                  onClick={() => setOpen(false)}
+                  className="inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-brand-charcoal transition-colors hover:text-brand-bronze"
+                >
+                  <User className="h-4 w-4" />
+                  {accountLabel}
                 </Link>
               </div>
               <div className="mt-8 px-4 pt-6 border-t border-brand-sand/30">

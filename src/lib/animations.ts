@@ -1,4 +1,4 @@
-import { MotionValue, useScroll, useTransform, cubicBezier } from "framer-motion";
+import { useScroll, useTransform, cubicBezier } from "framer-motion";
 import { RefObject } from "react";
 
 const customEase = cubicBezier(0.25, 0.46, 0.45, 0.94);
