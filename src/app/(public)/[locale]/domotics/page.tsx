@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { QuoteCTA } from "@/components/sections/QuoteCTA";
-
-export const metadata: Metadata = {
-  title: "Smart Home Control",
-  description:
-    "Smart home automation systems from LUXTOR. Control your blinds, curtains, awnings and pergolas with motorized motors and voice integration.",
-};
+import { getPublicPageMetadata } from "@/lib/i18n/metadata";
 
 const domotics = [
   { src: "/images/domotics/domotics-1.jpg", alt: "Smart home control panel integrated into a modern wall" },
@@ -20,21 +16,30 @@ const domotics = [
   { src: "/images/domotics/domotics-6.jpg", alt: "Mobile-first home automation controls for window treatments" },
 ];
 
-export default function DomoticsPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return getPublicPageMetadata(locale, "domotics");
+}
+
+export default async function DomoticsPage() {
+  const t = await getTranslations("domotics");
+
   return (
     <>
-      {/* Page header */}
       <Section className="pt-36 md:pt-44 pb-12 md:pb-16" variant="cream">
         <Container>
           <SectionHeading
-            label="Connected Living"
-            title="Smart Home Control"
-            description="Bring your home into the future with our smart automation systems. Control all your window treatments and outdoor features from your phone or voice command."
+            label={t("heading.label")}
+            title={t("heading.title")}
+            description={t("heading.description")}
           />
         </Container>
       </Section>
 
-      {/* Domotics grid */}
       <Section>
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

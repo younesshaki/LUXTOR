@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { serviceOptions } from "@/data/services";
@@ -16,6 +17,9 @@ interface HeroQuoteFormProps {
 export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
   const { loading, error, result, setError, submitSubmission } = useLeadSubmission();
   const [turnstileToken, setTurnstileToken] = useState("");
+  const t = useTranslations();
+  const tHero = useTranslations("home.hero");
+  const tForms = useTranslations("forms");
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -70,6 +74,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
 
   return (
     <div
+      data-header-theme={isPanel ? undefined : "light"}
       className={cn(
         isPanel
           ? "bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8"
@@ -92,7 +97,9 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                   : "text-4xl sm:text-5xl text-brand-charcoal max-w-2xl"
               )}
             >
-              Book a <span className="font-bold">FREE</span> MEASURE & QUOTE
+              {tHero.rich("quoteTitle", {
+                bold: (chunks) => <span className="font-bold">{chunks}</span>,
+              })}
             </h3>
 
             <p
@@ -103,8 +110,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                   : "text-brand-charcoal/70 text-lg max-w-lg"
               )}
             >
-              Get expert advice tailored to your space. No obligation, completely
-              free.
+              {tHero("quoteDescription")}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -112,7 +118,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                 <input
                   type="text"
                   name="fullName"
-                  placeholder="Your Name *"
+                  placeholder={`${tForms("fullName")} *`}
                   value={formData.fullName}
                   onChange={handleChange}
                   required
@@ -127,7 +133,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                 <input
                   type="email"
                   name="email"
-                  placeholder="Email Address *"
+                  placeholder={`${tForms("emailAddress")} *`}
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -148,7 +154,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                 <input
                   type="text"
                   name="suburb"
-                  placeholder="Suburb / Area *"
+                  placeholder={`${tForms("suburb")} *`}
                   value={formData.suburb}
                   onChange={handleChange}
                   required
@@ -163,7 +169,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="Contact Number *"
+                  placeholder={`${tForms("contactNumber")} *`}
                   value={formData.phone}
                   onChange={handleChange}
                   required
@@ -188,10 +194,10 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                     : "bg-white border border-brand-sand/20 text-brand-charcoal focus:ring-brand-bronze"
                 )}
               >
-                <option value="">Select a service *</option>
+                <option value="">{`${tForms("selectService")} *`}</option>
                 {serviceOptions.map((option) => (
                   <option key={option.value} value={option.value} className="text-brand-charcoal">
-                    {option.label}
+                    {t(option.labelKey)}
                   </option>
                 ))}
               </select>
@@ -199,7 +205,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
               {!isPanel && (
                 <textarea
                   name="message"
-                  placeholder="Tell us about your space and style preferences..."
+                  placeholder={tForms("placeholderSpacePreferences")}
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
@@ -223,7 +229,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                     : "bg-brand-bronze hover:bg-brand-bronze/90 text-white disabled:opacity-50"
                 )}
               >
-                {loading ? "Submitting..." : "Get Free Quote"}
+                {loading ? tForms("submitting") : tForms("getFreeQuote")}
               </button>
             </form>
           </motion.div>
@@ -248,7 +254,7 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                 isPanel ? "text-white" : "text-brand-charcoal"
               )}
             >
-              Thank You!
+              {tForms("thankYou")}
             </h4>
             <p
               className={cn(
@@ -256,13 +262,13 @@ export function HeroQuoteForm({ variant = "section" }: HeroQuoteFormProps) {
                 isPanel ? "text-white/70" : "text-brand-charcoal/70"
               )}
             >
-              We&apos;ll be in touch soon with your free quote.
+              {tForms("inTouchSoon")}
             </p>
             {result.suggestAccountCreation ? (
               <p className={cn("mt-4 text-sm", isPanel ? "text-white/80" : "text-brand-charcoal/80")}>
-                Want to track your requests?{" "}
+                {tForms("trackRequests")}{" "}
                 <Link href="/account/register" className="underline underline-offset-4">
-                  Create an account
+                  {tForms("createAccount")}
                 </Link>
                 .
               </p>

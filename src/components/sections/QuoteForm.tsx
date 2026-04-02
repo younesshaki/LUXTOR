@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle, Send } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 import { TurnstileField } from "@/components/forms/TurnstileField";
 import { useLeadSubmission } from "@/components/forms/useLeadSubmission";
@@ -14,6 +15,8 @@ import { serviceOptions } from "@/data/services";
 export function QuoteForm() {
   const { loading, error, result, setError, submitSubmission } = useLeadSubmission();
   const [turnstileToken, setTurnstileToken] = useState("");
+  const t = useTranslations();
+  const tForms = useTranslations("forms");
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -66,13 +69,15 @@ export function QuoteForm() {
     return (
       <div className="rounded-none border border-brand-sand/30 bg-brand-cream/40 p-10 text-center">
         <CheckCircle className="mx-auto mb-4 h-12 w-12 text-brand-bronze" />
-        <h3 className="font-heading text-3xl text-brand-black">Request received</h3>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{result.message}</p>
+        <h3 className="font-heading text-3xl text-brand-black">{tForms("requestReceived")}</h3>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          {tForms("quoteReceivedDescription")}
+        </p>
         {result.suggestAccountCreation ? (
           <p className="mt-4 text-sm text-brand-charcoal">
-            Want to track your requests?{" "}
+            {tForms("trackRequests")}{" "}
             <Link href="/account/register" className="text-brand-bronze underline underline-offset-4">
-              Create an account
+              {tForms("createAccount")}
             </Link>
             .
           </p>
@@ -89,12 +94,12 @@ export function QuoteForm() {
             htmlFor="fullName"
             className="block text-xs uppercase tracking-wider text-muted-foreground mb-2"
           >
-            Full Name
+            {tForms("fullName")}
           </label>
           <Input
             id="fullName"
             name="fullName"
-            placeholder="Your name"
+            placeholder={tForms("placeholderName")}
             value={formData.fullName}
             onChange={handleChange}
             required
@@ -106,13 +111,13 @@ export function QuoteForm() {
             htmlFor="email"
             className="block text-xs uppercase tracking-wider text-muted-foreground mb-2"
           >
-            Email Address
+            {tForms("emailAddress")}
           </label>
           <Input
             id="email"
             name="email"
             type="email"
-            placeholder="your@email.com"
+            placeholder={tForms("placeholderEmail")}
             value={formData.email}
             onChange={handleChange}
             required
@@ -127,13 +132,13 @@ export function QuoteForm() {
             htmlFor="phone"
             className="block text-xs uppercase tracking-wider text-muted-foreground mb-2"
           >
-            Phone Number
+            {tForms("phoneNumber")}
           </label>
           <Input
             id="phone"
             name="phone"
             type="tel"
-            placeholder="(555) 123-4567"
+            placeholder={tForms("placeholderPhone")}
             value={formData.phone}
             onChange={handleChange}
             className="rounded-none border-brand-sand/40 focus:border-brand-bronze h-12"
@@ -144,12 +149,12 @@ export function QuoteForm() {
             htmlFor="suburb"
             className="block text-xs uppercase tracking-wider text-muted-foreground mb-2"
           >
-            Suburb / Area
+            {tForms("suburb")}
           </label>
           <Input
             id="suburb"
             name="suburb"
-            placeholder="Your suburb"
+            placeholder={tForms("placeholderSuburb")}
             value={formData.suburb}
             onChange={handleChange}
             required
@@ -163,7 +168,7 @@ export function QuoteForm() {
           htmlFor="service"
           className="block text-xs uppercase tracking-wider text-muted-foreground mb-2"
         >
-          Service Interested In
+          {tForms("serviceInterest")}
         </label>
           <select
             id="service"
@@ -173,10 +178,10 @@ export function QuoteForm() {
             required
             className="flex h-12 w-full border border-brand-sand/40 bg-transparent px-3 py-1 text-sm transition-colors focus-visible:outline-none focus-visible:border-brand-bronze disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <option value="">Select a service</option>
+            <option value="">{tForms("selectService")}</option>
             {serviceOptions.map((option) => (
               <option key={option.value} value={option.value}>
-                {option.label}
+                {t(option.labelKey)}
               </option>
             ))}
           </select>
@@ -187,7 +192,7 @@ export function QuoteForm() {
           htmlFor="message"
           className="block text-xs uppercase tracking-wider text-muted-foreground mb-2"
         >
-          Tell Us About Your Project
+          {tForms("tellUsAboutProject")}
         </label>
         <Textarea
           id="message"
@@ -195,14 +200,14 @@ export function QuoteForm() {
           rows={5}
           value={formData.message}
           onChange={handleChange}
-          placeholder="Describe your space, your style preferences, and what you're looking for..."
+          placeholder={tForms("placeholderProjectDescription")}
           className="rounded-none border-brand-sand/40 focus:border-brand-bronze resize-none"
         />
       </div>
 
       <TurnstileField onTokenChange={setTurnstileToken} />
 
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      {error ? <p className="text-sm text-red-600">{error || tForms("saveError")}</p> : null}
 
       <Button
         type="submit"
@@ -210,13 +215,12 @@ export function QuoteForm() {
         disabled={loading}
         className="w-full sm:w-auto bg-brand-bronze hover:bg-brand-bronze/90 text-white rounded-none uppercase tracking-wider text-xs h-13 px-10"
       >
-        {loading ? "Sending..." : "Send Request"}
+        {loading ? tForms("sending") : tForms("sendRequest")}
         <Send className="ml-2 h-4 w-4" />
       </Button>
 
       <p className="text-xs text-muted-foreground">
-        We typically respond within 24 hours. Your information is kept private and
-        never shared.
+        {tForms("privacyNote")}
       </p>
     </form>
   );

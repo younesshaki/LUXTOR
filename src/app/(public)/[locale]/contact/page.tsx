@@ -1,51 +1,58 @@
 import type { Metadata } from "next";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { contactInfo } from "@/data/navigation";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { getPublicPageMetadata } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Get in touch with LUXTOR. Visit our showroom, call us, or send a message. We'd love to help transform your space.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return getPublicPageMetadata(locale, "contact");
+}
 
-const contactDetails = [
-  {
-    icon: MapPin,
-    label: "Visit Our Showroom",
-    value: `${contactInfo.address}\n${contactInfo.city}`,
-  },
-  {
-    icon: Phone,
-    label: "Call Us",
-    value: contactInfo.phone,
-    href: `tel:${contactInfo.phone}`,
-  },
-  {
-    icon: Mail,
-    label: "Email Us",
-    value: contactInfo.email,
-    href: `mailto:${contactInfo.email}`,
-  },
-  {
-    icon: Clock,
-    label: "Business Hours",
-    value: contactInfo.hours,
-  },
-];
+export default async function ContactPage() {
+  const t = await getTranslations("contact");
+  const tHeader = await getTranslations("header");
+  const contactDetails = [
+    {
+      icon: MapPin,
+      label: t("visitShowroom"),
+      value: `${contactInfo.address}\n${contactInfo.city}`,
+    },
+    {
+      icon: Phone,
+      label: t("callUs"),
+      value: contactInfo.phone,
+      href: `tel:${contactInfo.phone}`,
+    },
+    {
+      icon: Mail,
+      label: t("emailUs"),
+      value: contactInfo.email,
+      href: `mailto:${contactInfo.email}`,
+    },
+    {
+      icon: Clock,
+      label: t("businessHours"),
+      value: tHeader("hours"),
+    },
+  ];
 
-export default function ContactPage() {
   return (
     <>
       <Section className="pt-36 md:pt-44 pb-12 md:pb-16" variant="cream">
         <Container>
           <SectionHeading
-            label="Get in Touch"
-            title="We'd Love to Hear From You"
-            description="Whether you have a question about our collections or want to schedule a consultation, our team is here to help."
+            label={t("heading.label")}
+            title={t("heading.title")}
+            description={t("heading.description")}
           />
         </Container>
       </Section>
@@ -53,10 +60,9 @@ export default function ContactPage() {
       <Section>
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Contact info */}
             <div>
               <h3 className="font-heading text-2xl md:text-3xl text-brand-black mb-8">
-                Contact Information
+                {t("contactInformation")}
               </h3>
               <div className="space-y-6">
                 {contactDetails.map((item) => {

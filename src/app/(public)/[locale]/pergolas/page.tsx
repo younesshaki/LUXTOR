@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { QuoteCTA } from "@/components/sections/QuoteCTA";
-
-export const metadata: Metadata = {
-  title: "Designer Pergolas",
-  description:
-    "Luxury bioclimatic and traditional pergolas from LUXTOR. Create your perfect outdoor sanctuary with motorized louvre systems and premium design.",
-};
+import { getPublicPageMetadata } from "@/lib/i18n/metadata";
 
 const pergolas = [
   { src: "/images/pergolas/pergola-1.jpg", alt: "Coastal designer pergola with open white slats" },
@@ -20,21 +16,30 @@ const pergolas = [
   { src: "/images/pergolas/pergola-6.jpg", alt: "Premium pergola walkway with sculptural shadow lines" },
 ];
 
-export default function PergolaPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return getPublicPageMetadata(locale, "pergolas");
+}
+
+export default async function PergolaPage() {
+  const t = await getTranslations("pergolas");
+
   return (
     <>
-      {/* Page header */}
       <Section className="pt-36 md:pt-44 pb-12 md:pb-16" variant="cream">
         <Container>
           <SectionHeading
-            label="Outdoor Living"
-            title="Designer Pergolas"
-            description="Discover our collection of bioclimatic and traditional pergolas. Motorized louvre systems for perfect light and temperature control."
+            label={t("heading.label")}
+            title={t("heading.title")}
+            description={t("heading.description")}
           />
         </Container>
       </Section>
 
-      {/* Pergolas grid */}
       <Section>
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

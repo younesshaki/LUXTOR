@@ -1,78 +1,79 @@
 export interface NavItem {
-  label: string;
+  labelKey: string;
   href: string;
-  badge?: string;
-  mega?: {
-    heading: string;
-    links: Array<{ label: string; href: string }>;
-  };
+  badgeKey?: string;
 }
 
 export const navItems: NavItem[] = [
   {
-    label: "New In",
+    labelKey: "nav.newIn",
     href: "/collections#new",
   },
   {
-    label: "Private Sale",
+    labelKey: "nav.privateSale",
     href: "/sale",
-    badge: "Members Only",
+    badgeKey: "common.membersOnly",
   },
   {
-    label: "Blinds",
+    labelKey: "nav.blinds",
     href: "/collections#blinds",
   },
   {
-    label: "Curtains",
+    labelKey: "nav.curtains",
     href: "/collections#curtains",
   },
   {
-    label: "Awnings",
+    labelKey: "nav.awnings",
     href: "/awnings",
   },
   {
-    label: "Pergolas",
+    labelKey: "nav.pergolas",
     href: "/pergolas",
   },
   {
-    label: "Accessories",
+    labelKey: "nav.accessories",
     href: "/accessories",
   },
   {
-    label: "Domotics",
+    labelKey: "nav.domotics",
     href: "/domotics",
   },
   {
-    label: "Inspiration",
+    labelKey: "nav.inspiration",
     href: "/inspiration",
   },
   {
-    label: "Sale",
+    labelKey: "nav.sale",
     href: "/sale",
-    badge: "Sale",
+    badgeKey: "common.saleBadge",
   },
 ];
 
-export const footerExplore = [
-  { label: "New Collections", href: "/collections#new" },
-  { label: "Shop All Products", href: "/collections" },
-  { label: "Featured Designs", href: "/collections#featured" },
-  { label: "Clearance Sale", href: "/sale" },
+export interface FooterLink {
+  labelKey: string;
+  href: string;
+}
+
+export const footerExplore: FooterLink[] = [
+  { labelKey: "footer.newCollections", href: "/collections#new" },
+  { labelKey: "footer.shopAllProducts", href: "/collections" },
+  { labelKey: "footer.featuredDesigns", href: "/collections#featured" },
+  { labelKey: "footer.clearanceSale", href: "/sale" },
 ];
 
-export const footerCustomerService = [
-  { label: "Measurements Guide", href: "/guides/measurements" },
-  { label: "Installation Support", href: "/support/installation" },
-  { label: "Care & Maintenance", href: "/guides/care" },
-  { label: "Return Policy", href: "/support/returns" },
+export const footerCustomerService: FooterLink[] = [
+  { labelKey: "footer.measurementsGuide", href: "/guides/measurements" },
+  { labelKey: "footer.installationSupport", href: "/support/installation" },
+  { labelKey: "footer.careMaintenance", href: "/guides/care" },
+  { labelKey: "footer.returnPolicy", href: "/support/returns" },
 ];
 
-export const footerHelp = [
-  { label: "Contact Us", href: "/contact" },
-  { label: "Find a Showroom", href: "/showrooms" },
-  { label: "Request a Quote", href: "/quote" },
-  { label: "My Account", href: "/account" },
-  { label: "FAQs", href: "/faqs" },
+export const footerHelp: FooterLink[] = [
+  { labelKey: "footer.contactUs", href: "/contact" },
+  { labelKey: "footer.findShowroom", href: "/showrooms" },
+  { labelKey: "footer.requestQuote", href: "/quote" },
+  { labelKey: "footer.myAccount", href: "/account" },
+  { labelKey: "footer.faqs", href: "/faqs" },
 ];
 
 export const contactInfo = {
@@ -80,7 +81,6 @@ export const contactInfo = {
   email: "hello@luxtor.com",
   address: "123 Design Avenue, Suite 100",
   city: "Los Angeles, CA 90001",
-  hours: "Mon - Sat: 9:00 AM - 6:00 PM",
 } as const;
 
 export const socialLinks = [

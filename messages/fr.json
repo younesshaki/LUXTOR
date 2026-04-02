@@ -1,0 +1,361 @@
+{
+  "common": {
+    "luxtor": "LUXTOR",
+    "allRightsReserved": "Tous droits réservés.",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfService": "Conditions d'utilisation",
+    "membersOnly": "Membres uniquement",
+    "saleBadge": "Promo"
+  },
+  "nav": {
+    "newIn": "Nouveautés",
+    "privateSale": "Vente privée",
+    "blinds": "Stores",
+    "curtains": "Rideaux",
+    "awnings": "Stores bannes",
+    "pergolas": "Pergolas",
+    "accessories": "Accessoires",
+    "domotics": "Domotique",
+    "inspiration": "Inspiration",
+    "sale": "Promotions"
+  },
+  "header": {
+    "getQuote": "Demander un devis",
+    "requestQuote": "Demander un devis",
+    "dashboard": "Tableau de bord",
+    "myAccount": "Mon compte",
+    "signIn": "Se connecter",
+    "openMenu": "Ouvrir le menu",
+    "navigationMenu": "Menu de navigation",
+    "hours": "Lun - Sam : 9h00 - 18h00"
+  },
+  "footer": {
+    "description": "Rideaux haut de gamme, stores, pergolas et décoration intérieure sur mesure, conçus avec soin et adaptés à votre espace.",
+    "explore": "Explorer",
+    "service": "Service",
+    "help": "Aide",
+    "contact": "Contact",
+    "newCollections": "Nouvelles collections",
+    "shopAllProducts": "Tous les produits",
+    "featuredDesigns": "Sélection du moment",
+    "clearanceSale": "Déstockage",
+    "measurementsGuide": "Guide des mesures",
+    "installationSupport": "Aide à l'installation",
+    "careMaintenance": "Entretien et soin",
+    "returnPolicy": "Politique de retour",
+    "contactUs": "Nous contacter",
+    "findShowroom": "Trouver un showroom",
+    "requestQuote": "Demander un devis",
+    "myAccount": "Mon compte",
+    "faqs": "FAQ"
+  },
+  "home": {
+    "hero": {
+      "slide1": {
+        "label": "Collection Lin Haut de Gamme",
+        "heading": "Rideaux d'Exception",
+        "description": "Un contrôle de la lumière raffiné, allié à une élégance intemporelle pour chaque fenêtre.",
+        "cta": "Découvrir"
+      },
+      "slide2": {
+        "label": "Habillages de Fenêtres Design",
+        "heading": "Élégance sur Mesure",
+        "description": "Transformez votre intérieur avec notre collection de tissus et designs soigneusement sélectionnés.",
+        "cta": "Explorer"
+      },
+      "slide3": {
+        "label": "Solutions Occultantes",
+        "heading": "Sophistication Beige Doré",
+        "description": "Parfait pour chaque pièce. Qualité artisanale et précision, conçu pour votre confort.",
+        "cta": "Voir la collection"
+      },
+      "quoteTitle": "Réservez une PRISE DE MESURES & DEVIS <bold>GRATUITS</bold>",
+      "quoteDescription": "Bénéficiez de conseils d'experts adaptés à votre espace. Sans engagement, entièrement gratuit.",
+      "previousSlide": "Diapositive précédente",
+      "nextSlide": "Diapositive suivante",
+      "goToSlide": "Aller à la diapositive {number}"
+    },
+    "brandIntro": {
+      "label": "Notre Histoire",
+      "title": "Là où l'Artisanat\nRencontre le Design",
+      "imageAlt": "Sélection de tissus chez LUXTOR",
+      "paragraph1": "Chez LUXTOR, nous croyons que votre maison mérite bien plus que l'ordinaire. Chaque rideau, chaque store, chaque pièce de décoration est sélectionné et fabriqué avec un engagement sans faille envers la qualité et l'esthétique.",
+      "paragraph2": "Notre équipe de designers travaille en étroite collaboration avec vous pour comprendre votre vision, en proposant des consultations personnalisées qui garantissent que chaque détail reflète votre style unique et votre espace.",
+      "yearsValue": "15+",
+      "yearsLabel": "Ans d'expérience",
+      "homesValue": "2K+",
+      "homesLabel": "Intérieurs réalisés",
+      "customValue": "100%",
+      "customLabel": "Sur mesure"
+    },
+    "featuredCategories": {
+      "label": "Collections",
+      "title": "Sélectionnées pour Votre Intérieur",
+      "description": "Explorez nos collections soigneusement choisies, chacune conçue pour apporter un caractère unique à vos espaces de vie."
+    },
+    "bentoGrid": {
+      "craftsmanshipTitle": "Savoir-Faire Intemporel",
+      "craftsmanshipAlt": "Savoir-faire",
+      "yearsValue": "15+",
+      "yearsLabel": "Années d'excellence",
+      "homesValue": "2K+",
+      "homesLabel": "Intérieurs transformés",
+      "madeToMeasureTitle": "Sur Mesure",
+      "madeToMeasureDescription": "Chaque création est conçue sur mesure pour s'adapter à vos dimensions exactes et à votre vision esthétique.",
+      "getYourQuote": "Demander un devis",
+      "testimonialQuote": "\"Ils ont compris ma vision et l'ont concrétisée à la perfection. Qualité et service exceptionnels.\"",
+      "testimonialAuthor": "— Sarah M., Paris"
+    },
+    "whyChooseUs": {
+      "label": "Pourquoi LUXTOR",
+      "title": "La Différence LUXTOR",
+      "description": "Nous ne vendons pas simplement des habillages de fenêtres. Nous créons des expériences qui subliment votre quotidien."
+    },
+    "quoteCTA": {
+      "label": "Lancez Votre Projet",
+      "title": "Créons Ensemble Quelque Chose\nde Magnifique",
+      "description": "Réservez une consultation gratuite avec nos experts en design. Nous visiterons votre espace, comprendrons votre vision et créerons une solution personnalisée rien que pour vous.",
+      "requestQuote": "Demander un devis gratuit",
+      "contactUs": "Nous contacter"
+    }
+  },
+  "categories": {
+    "curtains": {
+      "title": "Rideaux",
+      "description": "Tissus luxueux confectionnés à la perfection pour chaque fenêtre."
+    },
+    "blinds": {
+      "title": "Stores",
+      "description": "Solutions modernes alliant ingénierie de précision et finitions élégantes."
+    },
+    "awnings": {
+      "title": "Stores bannes",
+      "description": "Agrandissez votre espace de vie avec des stores bannes haut de gamme."
+    },
+    "pergolas": {
+      "title": "Pergolas",
+      "description": "Créez un havre de paix extérieur avec des pergolas design."
+    },
+    "sheers": {
+      "title": "Voilages",
+      "description": "Des couches délicates qui filtrent la lumière avec une beauté éthérée."
+    },
+    "homeDecor": {
+      "title": "Décoration",
+      "description": "Accessoires sélectionnés pour compléter votre vision intérieure."
+    }
+  },
+  "whyChooseUsItems": {
+    "bespokeDesign": {
+      "title": "Design sur Mesure",
+      "description": "Chaque pièce est fabriquée sur mesure selon vos dimensions et préférences de style."
+    },
+    "premiumFabrics": {
+      "title": "Tissus Premium",
+      "description": "Nous sélectionnons uniquement les meilleurs matériaux auprès de fabricants de confiance du monde entier."
+    },
+    "expertInstallation": {
+      "title": "Installation Experte",
+      "description": "Notre équipe qualifiée garantit un ajustement et une finition irréprochables chez vous."
+    },
+    "personalConsultation": {
+      "title": "Consultation Personnalisée",
+      "description": "Consultations gratuites à domicile pour vous aider à trouver la solution parfaite."
+    }
+  },
+  "about": {
+    "heading": {
+      "label": "À Propos de LUXTOR",
+      "title": "L'Élégance Artisanale depuis le Premier Jour",
+      "description": "Nous avons commencé avec une conviction simple : chacun mérite un bel intérieur. Aujourd'hui, nous sommes devenus une référence en matière de décoration haut de gamme, au service de milliers de foyers avec des solutions sur mesure."
+    },
+    "values": {
+      "qualityFirst": {
+        "title": "La Qualité Avant Tout",
+        "text": "Nous ne faisons jamais de compromis sur les matériaux. Chaque tissu, chaque mécanisme, chaque finition est choisi pour sa durabilité et sa beauté."
+      },
+      "designLed": {
+        "title": "Guidés par le Design",
+        "text": "Notre équipe de design interne anticipe les tendances tout en respectant une esthétique intemporelle qui restera belle pendant des années."
+      },
+      "clientFocused": {
+        "title": "Centré sur le Client",
+        "text": "Votre satisfaction guide tout ce que nous faisons. De la première consultation à l'installation finale, nous vous accompagnons à chaque étape."
+      }
+    }
+  },
+  "collections": {
+    "heading": {
+      "label": "Nos Collections",
+      "title": "Sélectionnées avec Soin",
+      "description": "Parcourez notre gamme d'habillages de fenêtres et de décoration haut de gamme, chaque collection étant conçue avec soin pour s'adapter à différents styles et espaces."
+    },
+    "blinds": {
+      "label": "Stores",
+      "title": "Contrôle de Lumière sur Mesure",
+      "description": "Des vénitiens épurés aux systèmes modernes à filtrage doux, notre collection de stores allie intimité, texture et détails architecturaux raffinés."
+    }
+  },
+  "awnings": {
+    "heading": {
+      "label": "Solutions Extérieures",
+      "title": "Stores Bannes Haut de Gamme",
+      "description": "Transformez votre espace extérieur avec notre gamme de stores bannes rétractables et fixes. Options motorisées disponibles pour un confort optimal."
+    }
+  },
+  "pergolas": {
+    "heading": {
+      "label": "Vie en Extérieur",
+      "title": "Pergolas Design",
+      "description": "Découvrez notre collection de pergolas bioclimatiques et traditionnelles. Systèmes à lames motorisées pour un contrôle parfait de la lumière et de la température."
+    }
+  },
+  "accessories": {
+    "heading": {
+      "label": "Complétez Votre Design",
+      "title": "Accessoires de Décoration",
+      "description": "Explorez notre sélection d'accessoires haut de gamme incluant quincaillerie, rails, embrasses et tissus spéciaux pour compléter votre vision intérieure."
+    }
+  },
+  "domotics": {
+    "heading": {
+      "label": "Habitat Connecté",
+      "title": "Domotique",
+      "description": "Faites entrer votre maison dans le futur avec nos systèmes d'automatisation intelligents. Contrôlez tous vos habillages de fenêtres et équipements extérieurs depuis votre téléphone ou par commande vocale."
+    }
+  },
+  "inspiration": {
+    "heading": {
+      "label": "Idées Déco",
+      "title": "Trouvez Votre Style",
+      "description": "Explorez de vrais intérieurs transformés par LUXTOR. Inspirez-vous de nos galeries, guides couleurs et tendances saisonnières."
+    }
+  },
+  "sale": {
+    "heading": {
+      "label": "Vente Privée Exclusive",
+      "title": "Dernières Opportunités",
+      "description": "Collections premium à des prix exceptionnels. Quantités limitées sur les articles en déstockage et les ventes saisonnières."
+    },
+    "items": {
+      "designerCurtains": "Rideaux Design",
+      "modernBlinds": "Stores Modernes",
+      "outdoorAwnings": "Stores Bannes",
+      "pergolaSystems": "Systèmes Pergola",
+      "homeAccessories": "Accessoires Déco",
+      "sheersVoiles": "Voilages"
+    }
+  },
+  "quote": {
+    "heading": {
+      "label": "Devis Gratuit",
+      "title": "Demander un Devis",
+      "description": "Parlez-nous de votre projet et nous vous répondrons sous 24 heures avec un devis personnalisé. Sans engagement, sans pression."
+    }
+  },
+  "contact": {
+    "heading": {
+      "label": "Contactez-nous",
+      "title": "Nous Serions Ravis de Vous Entendre",
+      "description": "Que vous ayez une question sur nos collections ou que vous souhaitiez planifier une consultation, notre équipe est là pour vous aider."
+    },
+    "contactInformation": "Coordonnées",
+    "visitShowroom": "Visitez Notre Showroom",
+    "callUs": "Appelez-nous",
+    "emailUs": "Écrivez-nous",
+    "businessHours": "Heures d'ouverture"
+  },
+  "forms": {
+    "fullName": "Nom complet",
+    "emailAddress": "Adresse e-mail",
+    "phoneNumber": "Numéro de téléphone",
+    "contactNumber": "Numéro de contact",
+    "suburb": "Ville / Quartier",
+    "serviceInterest": "Service souhaité",
+    "message": "Message",
+    "tellUsAboutProject": "Parlez-nous de Votre Projet",
+    "placeholderName": "Votre nom",
+    "placeholderEmail": "votre@email.com",
+    "placeholderPhone": "(555) 123-4567",
+    "placeholderSuburb": "Votre ville",
+    "selectService": "Sélectionnez un service",
+    "generalEnquiry": "Demande générale",
+    "placeholderProjectDescription": "Décrivez votre espace, vos préférences de style et ce que vous recherchez...",
+    "placeholderSpacePreferences": "Parlez-nous de votre espace et de vos préférences de style...",
+    "placeholderContactMessage": "Expliquez-nous comment nous pouvons vous aider...",
+    "sendMessage": "Envoyer le message",
+    "sendRequest": "Envoyer la demande",
+    "getFreeQuote": "Obtenir un devis gratuit",
+    "sending": "Envoi en cours...",
+    "submitting": "Envoi en cours...",
+    "saveError": "Nous ne pouvons pas enregistrer votre demande pour le moment.",
+    "messageReceived": "Message reçu",
+    "requestReceived": "Demande reçue",
+    "contactReceivedDescription": "Votre message a bien été reçu.",
+    "quoteReceivedDescription": "Votre demande de devis a bien été reçue.",
+    "thankYou": "Merci !",
+    "inTouchSoon": "Nous vous contacterons bientôt avec votre devis gratuit.",
+    "trackRequests": "Souhaitez-vous suivre vos demandes ?",
+    "keepTrackRequests": "Souhaitez-vous suivre vos demandes ?",
+    "createAccount": "Créer un compte",
+    "privacyNote": "Nous répondons généralement sous 24 heures. Vos informations restent confidentielles et ne sont jamais partagées."
+  },
+  "services": {
+    "curtains": "Rideaux sur mesure",
+    "blinds": "Stores",
+    "sheers": "Voilages",
+    "awnings": "Stores bannes",
+    "pergolas": "Pergolas",
+    "accessories": "Accessoires",
+    "domotics": "Domotique",
+    "homeDecor": "Décoration",
+    "consultation": "Consultation design",
+    "other": "Autre"
+  },
+  "metadata": {
+    "home": {
+      "title": "LUXTOR | Rideaux, Stores & Décoration Haut de Gamme",
+      "description": "Transformez votre espace avec les rideaux, stores et décoration sur mesure LUXTOR. Artisanat d'exception, tissus luxueux et consultations design personnalisées."
+    },
+    "about": {
+      "title": "À Propos",
+      "description": "Découvrez l'histoire de LUXTOR, notre engagement envers l'artisanat et notre passion pour la transformation des espaces avec une décoration haut de gamme."
+    },
+    "collections": {
+      "title": "Collections",
+      "description": "Explorez les collections LUXTOR : rideaux, stores, voilages et accessoires de décoration haut de gamme."
+    },
+    "awnings": {
+      "title": "Stores Bannes",
+      "description": "Stores bannes rétractables et fixes haut de gamme LUXTOR. Agrandissez votre espace de vie avec des stores motorisés."
+    },
+    "pergolas": {
+      "title": "Pergolas Design",
+      "description": "Pergolas bioclimatiques et traditionnelles de luxe LUXTOR. Créez votre havre de paix extérieur avec des systèmes à lames motorisées."
+    },
+    "accessories": {
+      "title": "Accessoires de Décoration",
+      "description": "Accessoires premium pour vos habillages de fenêtres et votre décoration. Quincaillerie, tissus, embrasses et plus chez LUXTOR."
+    },
+    "domotics": {
+      "title": "Domotique",
+      "description": "Systèmes d'automatisation intelligents LUXTOR. Contrôlez vos stores, rideaux, stores bannes et pergolas avec des moteurs motorisés et la commande vocale."
+    },
+    "inspiration": {
+      "title": "Inspiration",
+      "description": "Trouvez votre style avec la galerie d'inspiration LUXTOR. Designs d'intérieur, guides couleurs et conseils tendances."
+    },
+    "sale": {
+      "title": "Dernières Opportunités",
+      "description": "Vente privée LUXTOR. Offres exclusives réservées aux membres. Jusqu'à 50 % de réduction sur rideaux, stores et décoration."
+    },
+    "quote": {
+      "title": "Demander un Devis",
+      "description": "Demandez un devis gratuit et sans engagement pour des rideaux, stores et décoration sur mesure LUXTOR. Réponse sous 24 heures."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Contactez LUXTOR. Visitez notre showroom, appelez-nous ou envoyez-nous un message. Nous serions ravis de transformer votre espace."
+    }
+  }
+}

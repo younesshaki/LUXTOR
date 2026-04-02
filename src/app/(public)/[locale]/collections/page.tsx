@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-
-export const metadata: Metadata = {
-  title: "Collections",
-  description:
-    "Explore LUXTOR's curated collections of premium curtains, blinds, sheers, and home decor accessories.",
-};
+import { getPublicPageMetadata } from "@/lib/i18n/metadata";
 
 const blinds = [
   { src: "/images/blinds/blind-1.jpg", alt: "Dark-toned venetian blinds across a wide window" },
@@ -19,16 +15,26 @@ const blinds = [
   { src: "/images/blinds/blind-6.jpg", alt: "Elegant shadow pattern cast by blinds onto a wall" },
 ];
 
-export default function CollectionsPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return getPublicPageMetadata(locale, "collections");
+}
+
+export default async function CollectionsPage() {
+  const t = await getTranslations("collections");
+
   return (
     <>
-      {/* Page header */}
       <Section className="pt-36 md:pt-44 pb-12 md:pb-16" variant="cream">
         <Container>
           <SectionHeading
-            label="Our Collections"
-            title="Curated With Care"
-            description="Browse our range of premium window treatments and home decor, each collection thoughtfully designed to suit different styles and spaces."
+            label={t("heading.label")}
+            title={t("heading.title")}
+            description={t("heading.description")}
           />
         </Container>
       </Section>
@@ -36,9 +42,9 @@ export default function CollectionsPage() {
       <Section id="blinds">
         <Container>
           <SectionHeading
-            label="Blinds"
-            title="Tailored Light Control"
-            description="From sleek venetians to soft-filtering modern systems, our blinds collection balances privacy, texture, and refined architectural detail."
+            label={t("blinds.label")}
+            title={t("blinds.title")}
+            description={t("blinds.description")}
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {blinds.map((blind, i) => (

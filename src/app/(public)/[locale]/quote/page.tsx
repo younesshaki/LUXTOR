@@ -1,24 +1,31 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { QuoteForm } from "@/components/sections/QuoteForm";
+import { getPublicPageMetadata } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = {
-  title: "Request a Quote",
-  description:
-    "Request a free, no-obligation quote for custom curtains, blinds, and home decor from LUXTOR. We'll get back to you within 24 hours.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return getPublicPageMetadata(locale, "quote");
+}
 
-export default function QuotePage() {
+export default async function QuotePage() {
+  const t = await getTranslations("quote");
+
   return (
     <>
       <Section className="pt-36 md:pt-44 pb-12 md:pb-16" variant="cream">
         <Container>
           <SectionHeading
-            label="Free Quote"
-            title="Request a Quote"
-            description="Tell us about your project and we'll get back to you within 24 hours with a personalized quote. No obligation, no pressure."
+            label={t("heading.label")}
+            title={t("heading.title")}
+            description={t("heading.description")}
           />
         </Container>
       </Section>

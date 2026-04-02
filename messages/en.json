@@ -1,0 +1,361 @@
+{
+  "common": {
+    "luxtor": "LUXTOR",
+    "allRightsReserved": "All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "membersOnly": "Members Only",
+    "saleBadge": "Sale"
+  },
+  "nav": {
+    "newIn": "New In",
+    "privateSale": "Private Sale",
+    "blinds": "Blinds",
+    "curtains": "Curtains",
+    "awnings": "Awnings",
+    "pergolas": "Pergolas",
+    "accessories": "Accessories",
+    "domotics": "Domotics",
+    "inspiration": "Inspiration",
+    "sale": "Sale"
+  },
+  "header": {
+    "getQuote": "Get a Quote",
+    "requestQuote": "Request a Quote",
+    "dashboard": "Dashboard",
+    "myAccount": "My Account",
+    "signIn": "Sign in",
+    "openMenu": "Open menu",
+    "navigationMenu": "Navigation Menu",
+    "hours": "Mon - Sat: 9:00 AM - 6:00 PM"
+  },
+  "footer": {
+    "description": "Premium curtains, blinds, pergolas, and bespoke home styling, crafted with care and tailored for your space.",
+    "explore": "Explore",
+    "service": "Service",
+    "help": "Help",
+    "contact": "Contact",
+    "newCollections": "New Collections",
+    "shopAllProducts": "Shop All Products",
+    "featuredDesigns": "Featured Designs",
+    "clearanceSale": "Clearance Sale",
+    "measurementsGuide": "Measurements Guide",
+    "installationSupport": "Installation Support",
+    "careMaintenance": "Care & Maintenance",
+    "returnPolicy": "Return Policy",
+    "contactUs": "Contact Us",
+    "findShowroom": "Find a Showroom",
+    "requestQuote": "Request a Quote",
+    "myAccount": "My Account",
+    "faqs": "FAQs"
+  },
+  "home": {
+    "hero": {
+      "slide1": {
+        "label": "Premium Linen Collection",
+        "heading": "Luxurious Curtains",
+        "description": "Refined light control paired with timeless elegance for every window.",
+        "cta": "Shop Now"
+      },
+      "slide2": {
+        "label": "Designer Window Treatments",
+        "heading": "Curated Elegance",
+        "description": "Transform your space with our handpicked collection of premium fabrics and designs.",
+        "cta": "Discover"
+      },
+      "slide3": {
+        "label": "Room Darkening Solutions",
+        "heading": "Yellow Beige Sophistication",
+        "description": "Perfect for any room. Quality crafted with precision, designed for your comfort.",
+        "cta": "Explore Collection"
+      },
+      "quoteTitle": "Book a <bold>FREE</bold> MEASURE & QUOTE",
+      "quoteDescription": "Get expert advice tailored to your space. No obligation, completely free.",
+      "previousSlide": "Previous slide",
+      "nextSlide": "Next slide",
+      "goToSlide": "Go to slide {number}"
+    },
+    "brandIntro": {
+      "label": "Our Story",
+      "title": "Where Craftsmanship\nMeets Design",
+      "imageAlt": "Curated fabric selection at LUXTOR showroom",
+      "paragraph1": "At LUXTOR, we believe your home deserves more than ordinary. Every curtain, every blind, every piece of decor is selected and crafted with an unwavering commitment to quality and aesthetics.",
+      "paragraph2": "Our team of designers works closely with you to understand your vision, offering personalized consultations that ensure every detail reflects your unique style and space.",
+      "yearsValue": "15+",
+      "yearsLabel": "Years Experience",
+      "homesValue": "2K+",
+      "homesLabel": "Homes Styled",
+      "customValue": "100%",
+      "customLabel": "Custom Made"
+    },
+    "featuredCategories": {
+      "label": "Collections",
+      "title": "Curated for Your Home",
+      "description": "Explore our carefully selected collections, each designed to bring a unique character to your living spaces."
+    },
+    "bentoGrid": {
+      "craftsmanshipTitle": "Timeless Craftsmanship",
+      "craftsmanshipAlt": "Craftsmanship",
+      "yearsValue": "15+",
+      "yearsLabel": "Years of Excellence",
+      "homesValue": "2K+",
+      "homesLabel": "Homes Transformed",
+      "madeToMeasureTitle": "Made to Measure",
+      "madeToMeasureDescription": "Every design is custom-crafted to match your exact measurements and aesthetic vision.",
+      "getYourQuote": "Get Your Quote",
+      "testimonialQuote": "\"They understood my vision and brought it to life perfectly. Exceptional quality and service.\"",
+      "testimonialAuthor": "— Sarah M., Los Angeles"
+    },
+    "whyChooseUs": {
+      "label": "Why LUXTOR",
+      "title": "The LUXTOR Difference",
+      "description": "We don't just sell window treatments. We create experiences that elevate how you live."
+    },
+    "quoteCTA": {
+      "label": "Start Your Project",
+      "title": "Let's Create Something\nBeautiful Together",
+      "description": "Book a free consultation with our design experts. We'll visit your space, understand your vision, and craft a personalized solution just for you.",
+      "requestQuote": "Request a Free Quote",
+      "contactUs": "Contact Us"
+    }
+  },
+  "categories": {
+    "curtains": {
+      "title": "Curtains",
+      "description": "Luxurious fabrics tailored to perfection for every window."
+    },
+    "blinds": {
+      "title": "Blinds",
+      "description": "Modern solutions with precision engineering and elegant finishes."
+    },
+    "awnings": {
+      "title": "Awnings",
+      "description": "Extend your living space with premium outdoor awnings."
+    },
+    "pergolas": {
+      "title": "Pergolas",
+      "description": "Create a stunning outdoor sanctuary with designer pergolas."
+    },
+    "sheers": {
+      "title": "Sheers & Voiles",
+      "description": "Delicate layers that filter light with ethereal beauty."
+    },
+    "homeDecor": {
+      "title": "Home Decor",
+      "description": "Curated accessories to complete your interior vision."
+    }
+  },
+  "whyChooseUsItems": {
+    "bespokeDesign": {
+      "title": "Bespoke Design",
+      "description": "Every piece is custom-made to your exact measurements and style preferences."
+    },
+    "premiumFabrics": {
+      "title": "Premium Fabrics",
+      "description": "We source only the finest materials from trusted mills around the world."
+    },
+    "expertInstallation": {
+      "title": "Expert Installation",
+      "description": "Our skilled team ensures a flawless fit and finish in your home."
+    },
+    "personalConsultation": {
+      "title": "Personal Consultation",
+      "description": "Free in-home consultations to help you find the perfect solution."
+    }
+  },
+  "about": {
+    "heading": {
+      "label": "About LUXTOR",
+      "title": "Crafting Elegance Since Day One",
+      "description": "We started with a simple belief: everyone deserves a beautiful home. Today, we've grown into a trusted name in premium home decor, serving thousands of homes with bespoke solutions."
+    },
+    "values": {
+      "qualityFirst": {
+        "title": "Quality First",
+        "text": "We never compromise on materials. Every fabric, every mechanism, every finish is chosen for its durability and beauty."
+      },
+      "designLed": {
+        "title": "Design-Led",
+        "text": "Our in-house design team stays ahead of trends while respecting timeless aesthetics that will look beautiful for years."
+      },
+      "clientFocused": {
+        "title": "Client-Focused",
+        "text": "Your satisfaction drives everything we do. From first consultation to final installation, we're with you every step."
+      }
+    }
+  },
+  "collections": {
+    "heading": {
+      "label": "Our Collections",
+      "title": "Curated With Care",
+      "description": "Browse our range of premium window treatments and home decor, each collection thoughtfully designed to suit different styles and spaces."
+    },
+    "blinds": {
+      "label": "Blinds",
+      "title": "Tailored Light Control",
+      "description": "From sleek venetians to soft-filtering modern systems, our blinds collection balances privacy, texture, and refined architectural detail."
+    }
+  },
+  "awnings": {
+    "heading": {
+      "label": "Outdoor Solutions",
+      "title": "Premium Awnings",
+      "description": "Transform your outdoor space with our range of retractable and fixed awnings. Motorized options available for ultimate convenience."
+    }
+  },
+  "pergolas": {
+    "heading": {
+      "label": "Outdoor Living",
+      "title": "Designer Pergolas",
+      "description": "Discover our collection of bioclimatic and traditional pergolas. Motorized louvre systems for perfect light and temperature control."
+    }
+  },
+  "accessories": {
+    "heading": {
+      "label": "Complete Your Design",
+      "title": "Home Accessories",
+      "description": "Explore our curated selection of premium accessories including hardware, tracks, tiebacks, and specialty fabrics to complete your interior vision."
+    }
+  },
+  "domotics": {
+    "heading": {
+      "label": "Connected Living",
+      "title": "Smart Home Control",
+      "description": "Bring your home into the future with our smart automation systems. Control all your window treatments and outdoor features from your phone or voice command."
+    }
+  },
+  "inspiration": {
+    "heading": {
+      "label": "Design Ideas",
+      "title": "Find Your Style",
+      "description": "Explore real rooms transformed by LUXTOR. Get inspired by our curated galleries, color guides, and seasonal trends."
+    }
+  },
+  "sale": {
+    "heading": {
+      "label": "Exclusive Members Only",
+      "title": "Last Chance Deals",
+      "description": "Premium collections at exceptional prices. Limited quantities on clearance items and seasonal sales."
+    },
+    "items": {
+      "designerCurtains": "Designer Curtains",
+      "modernBlinds": "Modern Blinds",
+      "outdoorAwnings": "Outdoor Awnings",
+      "pergolaSystems": "Pergola Systems",
+      "homeAccessories": "Home Accessories",
+      "sheersVoiles": "Sheers & Voiles"
+    }
+  },
+  "quote": {
+    "heading": {
+      "label": "Free Quote",
+      "title": "Request a Quote",
+      "description": "Tell us about your project and we'll get back to you within 24 hours with a personalized quote. No obligation, no pressure."
+    }
+  },
+  "contact": {
+    "heading": {
+      "label": "Get in Touch",
+      "title": "We'd Love to Hear From You",
+      "description": "Whether you have a question about our collections or want to schedule a consultation, our team is here to help."
+    },
+    "contactInformation": "Contact Information",
+    "visitShowroom": "Visit Our Showroom",
+    "callUs": "Call Us",
+    "emailUs": "Email Us",
+    "businessHours": "Business Hours"
+  },
+  "forms": {
+    "fullName": "Full Name",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "contactNumber": "Contact Number",
+    "suburb": "Suburb / Area",
+    "serviceInterest": "Service Interested In",
+    "message": "Message",
+    "tellUsAboutProject": "Tell Us About Your Project",
+    "placeholderName": "Your name",
+    "placeholderEmail": "your@email.com",
+    "placeholderPhone": "(555) 123-4567",
+    "placeholderSuburb": "Your suburb",
+    "selectService": "Select a service",
+    "generalEnquiry": "General enquiry",
+    "placeholderProjectDescription": "Describe your space, your style preferences, and what you're looking for...",
+    "placeholderSpacePreferences": "Tell us about your space and style preferences...",
+    "placeholderContactMessage": "Tell us how we can help...",
+    "sendMessage": "Send Message",
+    "sendRequest": "Send Request",
+    "getFreeQuote": "Get Free Quote",
+    "sending": "Sending...",
+    "submitting": "Submitting...",
+    "saveError": "We could not save your request right now.",
+    "messageReceived": "Message received",
+    "requestReceived": "Request received",
+    "contactReceivedDescription": "Your message has been received.",
+    "quoteReceivedDescription": "Your quote request has been received.",
+    "thankYou": "Thank You!",
+    "inTouchSoon": "We'll be in touch soon with your free quote.",
+    "trackRequests": "Want to track your requests?",
+    "keepTrackRequests": "Want to keep track of your requests?",
+    "createAccount": "Create an account",
+    "privacyNote": "We typically respond within 24 hours. Your information is kept private and never shared."
+  },
+  "services": {
+    "curtains": "Custom Curtains",
+    "blinds": "Blinds",
+    "sheers": "Sheers & Voiles",
+    "awnings": "Awnings",
+    "pergolas": "Pergolas",
+    "accessories": "Accessories",
+    "domotics": "Smart Home Control",
+    "homeDecor": "Home Decor",
+    "consultation": "Design Consultation",
+    "other": "Other"
+  },
+  "metadata": {
+    "home": {
+      "title": "LUXTOR | Premium Curtains, Blinds & Home Decor",
+      "description": "Transform your space with LUXTOR's premium curtains, blinds, and bespoke home decor. Expert craftsmanship, luxurious fabrics, and personalized design consultations."
+    },
+    "about": {
+      "title": "About Us",
+      "description": "Learn about LUXTOR's story, our commitment to craftsmanship, and our passion for transforming spaces with premium home decor."
+    },
+    "collections": {
+      "title": "Collections",
+      "description": "Explore LUXTOR's curated collections of premium curtains, blinds, sheers, and home decor accessories."
+    },
+    "awnings": {
+      "title": "Outdoor Awnings",
+      "description": "Premium retractable and fixed awnings from LUXTOR. Extend your living space with motorized outdoor awnings designed for Australian weather."
+    },
+    "pergolas": {
+      "title": "Designer Pergolas",
+      "description": "Luxury bioclimatic and traditional pergolas from LUXTOR. Create your perfect outdoor sanctuary with motorized louvre systems and premium design."
+    },
+    "accessories": {
+      "title": "Home Accessories",
+      "description": "Premium accessories for your window treatments and home decor. Hardware, fabrics, tiebacks, and more from LUXTOR."
+    },
+    "domotics": {
+      "title": "Smart Home Control",
+      "description": "Smart home automation systems from LUXTOR. Control your blinds, curtains, awnings and pergolas with motorized motors and voice integration."
+    },
+    "inspiration": {
+      "title": "Inspiration",
+      "description": "Find your style with LUXTOR's inspiration gallery. Room designs, color guides, and trend tips for your perfect interior."
+    },
+    "sale": {
+      "title": "Last Chance Deals",
+      "description": "LUXTOR private sale. Members only exclusive deals. Up to 50% off premium curtains, blinds, and home decor."
+    },
+    "quote": {
+      "title": "Request a Quote",
+      "description": "Request a free, no-obligation quote for custom curtains, blinds, and home decor from LUXTOR. We'll get back to you within 24 hours."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Get in touch with LUXTOR. Visit our showroom, call us, or send a message. We'd love to help transform your space."
+    }
+  }
+}

@@ -1,59 +1,80 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useLayoutEffect, useState } from "react";
+import NextLink from "next/link";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { Menu, X, Phone, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Container } from "./Container";
 import { navItems, contactInfo } from "@/data/navigation";
+import { Link } from "@/i18n/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { buttonVariants } from "@/components/ui/button";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const HEADER_ZONE_HEIGHT = 120;
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const { status } = useSession();
-  const [hasDarkSection, setHasDarkSection] = useState(false);
-  const isDark = pathname === "/" || hasDarkSection;
+  const { data: session, status } = useSession();
+  const [headerTheme, setHeaderTheme] = useState<"light" | "dark">("light");
+  const isDark = headerTheme === "dark";
+  const t = useTranslations();
+
   const accountHref = status === "authenticated" ? "/account" : "/account/login";
-  const accountLabel = status === "authenticated" ? "My Account" : "Sign in";
+  const accountLabel = status === "authenticated" ? t("header.myAccount") : t("header.signIn");
+  const isAdmin = session?.user.role === "admin";
 
-  useEffect(() => {
-    const intersecting = new Set<Element>();
-    const rootMarginBottom = Math.max(0, window.innerHeight - HEADER_ZONE_HEIGHT);
+  useLayoutEffect(() => {
+    let frameId = 0;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            intersecting.add(entry.target);
-          } else {
-            intersecting.delete(entry.target);
-          }
-        });
-        setHasDarkSection(intersecting.size > 0);
-      },
-      { rootMargin: `0px 0px -${rootMarginBottom}px 0px`, threshold: 0 }
-    );
+    const updateHeaderTheme = () => {
+      frameId = 0;
 
-    document.querySelectorAll('[data-header-theme="dark"]').forEach((el) => {
-      observer.observe(el);
-    });
+      const activeSection = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-header-theme]")
+      ).find((section) => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= HEADER_ZONE_HEIGHT && rect.bottom > HEADER_ZONE_HEIGHT;
+      });
+
+      const nextTheme =
+        activeSection?.dataset.headerTheme === "dark" ? "dark" : "light";
+
+      setHeaderTheme((currentTheme) =>
+        currentTheme === nextTheme ? currentTheme : nextTheme
+      );
+    };
+
+    const scheduleUpdate = () => {
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+
+      frameId = requestAnimationFrame(updateHeaderTheme);
+    };
+
+    updateHeaderTheme();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
 
     return () => {
-      observer.disconnect();
-      intersecting.clear();
-      setHasDarkSection(false);
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      setHeaderTheme("light");
     };
   }, [pathname]);
 
   return (
     <header className={cn(
-      "fixed top-0 left-0 right-0 z-50 bg-white/5 backdrop-blur-sm border-b transition-colors duration-300",
+      "fixed top-0 inset-x-0 z-50 bg-white/5 backdrop-blur-sm border-b transition-colors duration-300",
       isDark ? "border-white/10" : "border-brand-sand/30"
     )}>
 
@@ -63,12 +84,21 @@ export function Header() {
         isDark ? "border-white/10" : "border-brand-sand/30"
       )}>
         <Container className={cn(
-          "flex items-center justify-between py-2 text-xs tracking-wide transition-colors duration-300",
+          "max-w-[96rem] flex items-center justify-between py-2 text-xs tracking-wide transition-colors duration-300 2xl:px-8",
           isDark ? "text-white/60" : "text-brand-charcoal-light"
         )}>
-          <span className="hidden sm:inline">{contactInfo.hours}</span>
-          <div className="ml-auto flex items-center gap-4 sm:gap-5">
-            <Link
+          <span className="hidden sm:inline">{t("header.hours")}</span>
+          <div className="ms-auto flex items-center gap-4 sm:gap-5">
+            <LanguageSwitcher />
+            {isAdmin ? (
+              <NextLink
+                href="/admin"
+                className="bg-red-600 text-white text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded"
+              >
+                {t("header.dashboard")}
+              </NextLink>
+            ) : null}
+            <NextLink
               href={accountHref}
               className={cn(
                 "inline-flex items-center gap-1.5 transition-colors",
@@ -77,7 +107,7 @@ export function Header() {
             >
               <User className="h-3 w-3" />
               {accountLabel}
-            </Link>
+            </NextLink>
             <a
               href={`tel:${contactInfo.phone}`}
               className={cn(
@@ -93,9 +123,9 @@ export function Header() {
       </div>
 
       {/* Main nav */}
-      <Container className="flex items-center justify-between h-16 md:h-20">
+      <Container className="grid h-16 max-w-[96rem] grid-cols-[auto_1fr_auto] items-center gap-4 md:h-20 2xl:grid-cols-[max-content_minmax(0,1fr)_max-content] 2xl:gap-8 2xl:px-8">
         {/* Logo */}
-        <Link href="/" className="relative z-10">
+        <Link href="/" className="relative z-10 justify-self-start">
           <span
             style={{ fontFamily: "var(--font-playfair)" }}
             className={cn(
@@ -108,13 +138,13 @@ export function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1 relative">
+        <nav className="relative hidden min-w-0 items-center justify-center gap-0 justify-self-center 2xl:flex">
           {navItems.map((item) => (
             <Link
-              key={item.label}
+              key={item.labelKey}
               href={item.href}
               className={cn(
-                "text-sm tracking-wide uppercase transition-colors duration-200 px-4 py-2 hover:text-brand-bronze min-h-[44px] inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-brand-bronze focus-visible:ring-offset-2 outline-none rounded-sm font-semibold",
+                "inline-flex min-h-[44px] items-center gap-1.5 rounded-sm px-2.5 py-2 text-sm font-semibold uppercase tracking-wide transition-colors duration-200 hover:text-brand-bronze focus-visible:ring-2 focus-visible:ring-brand-bronze focus-visible:ring-offset-2 outline-none",
                 pathname === item.href
                   ? "text-brand-bronze"
                   : isDark
@@ -122,10 +152,10 @@ export function Header() {
                     : "text-brand-charcoal"
               )}
             >
-              {item.label}
-              {item.badge && (
+              {t(item.labelKey)}
+              {item.badgeKey && (
                 <span className="bg-red-600 text-white text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded">
-                  {item.badge}
+                  {t(item.badgeKey)}
                 </span>
               )}
             </Link>
@@ -133,33 +163,33 @@ export function Header() {
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden items-center justify-self-end 2xl:flex">
           <Link
             href="/quote"
             className={cn(
               buttonVariants({ variant: "default", size: "sm" }),
-              "bg-brand-bronze hover:bg-brand-bronze/90 text-white tracking-wide uppercase text-xs rounded-none px-6 h-10"
+              "h-10 rounded-none bg-brand-bronze px-5 text-xs uppercase tracking-wide whitespace-nowrap text-white hover:bg-brand-bronze/90"
             )}
           >
-            Get a Quote
+            {t("header.getQuote")}
           </Link>
         </div>
 
         {/* Mobile menu */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger className={cn(
-            "md:hidden relative z-10 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-brand-bronze focus-visible:ring-offset-2 outline-none transition-colors duration-300",
+            "relative z-10 flex min-h-[44px] min-w-[44px] items-center justify-center justify-self-end p-2 transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand-bronze focus-visible:ring-offset-2 outline-none 2xl:hidden",
             isDark ? "text-white" : "text-brand-charcoal"
           )}>
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">{t("header.openMenu")}</span>
           </SheetTrigger>
           <SheetContent side="right" className="w-full sm:w-80 bg-white pt-16">
-            <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+            <SheetTitle className="sr-only">{t("header.navigationMenu")}</SheetTitle>
             <nav className="flex flex-col gap-1">
               {navItems.map((item) => (
                 <Link
-                  key={item.href}
+                  key={item.labelKey}
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={cn(
@@ -169,10 +199,10 @@ export function Header() {
                       : "text-brand-charcoal hover:text-brand-bronze hover:bg-brand-cream/50"
                   )}
                 >
-                  {item.label}
-                  {item.badge && (
+                  {t(item.labelKey)}
+                  {item.badgeKey && (
                     <span className="bg-red-600 text-white text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded">
-                      {item.badge}
+                      {t(item.badgeKey)}
                     </span>
                   )}
                 </Link>
@@ -186,21 +216,24 @@ export function Header() {
                     "w-full bg-brand-bronze hover:bg-brand-bronze/90 text-white tracking-wide uppercase text-sm rounded-none h-12"
                   )}
                 >
-                  Request a Quote
+                  {t("header.requestQuote")}
                 </Link>
               </div>
               <div className="mt-4 px-4">
-                <Link
+                <NextLink
                   href={accountHref}
                   onClick={() => setOpen(false)}
                   className="inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-brand-charcoal transition-colors hover:text-brand-bronze"
                 >
                   <User className="h-4 w-4" />
                   {accountLabel}
-                </Link>
+                </NextLink>
+              </div>
+              <div className="mt-4 px-4">
+                <LanguageSwitcher />
               </div>
               <div className="mt-8 px-4 pt-6 border-t border-brand-sand/30">
-                <p className="text-xs text-muted-foreground mb-1">{contactInfo.hours}</p>
+                <p className="text-xs text-muted-foreground mb-1">{t("header.hours")}</p>
                 <a
                   href={`tel:${contactInfo.phone}`}
                   className="text-sm text-brand-bronze font-medium"

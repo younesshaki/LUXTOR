@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { QuoteCTA } from "@/components/sections/QuoteCTA";
-
-export const metadata: Metadata = {
-  title: "Inspiration",
-  description:
-    "Find your style with LUXTOR's inspiration gallery. Room designs, color guides, and trend tips for your perfect interior.",
-};
+import { getPublicPageMetadata } from "@/lib/i18n/metadata";
 
 const inspirationGallery = [
   { src: "/images/inspiration/inspiration-1.jpg", alt: "Earthy modern living room with layered textures and warm tones" },
@@ -20,21 +16,30 @@ const inspirationGallery = [
   { src: "/images/inspiration/inspiration-6.jpg", alt: "Bright room scene framed by airy curtains and architectural lines" },
 ];
 
-export default function InspirationPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return getPublicPageMetadata(locale, "inspiration");
+}
+
+export default async function InspirationPage() {
+  const t = await getTranslations("inspiration");
+
   return (
     <>
-      {/* Page header */}
       <Section className="pt-36 md:pt-44 pb-12 md:pb-16" variant="cream">
         <Container>
           <SectionHeading
-            label="Design Ideas"
-            title="Find Your Style"
-            description="Explore real rooms transformed by LUXTOR. Get inspired by our curated galleries, color guides, and seasonal trends."
+            label={t("heading.label")}
+            title={t("heading.title")}
+            description={t("heading.description")}
           />
         </Container>
       </Section>
 
-      {/* Inspiration gallery */}
       <Section>
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

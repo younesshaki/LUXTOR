@@ -14,34 +14,47 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     }
 
     const lenis = new Lenis({
+      autoRaf: true,
       duration: 1,
       smoothWheel: true,
       syncTouch: false,
       wheelMultiplier: 0.9,
+      stopInertiaOnNavigate: true,
       easing: (t: number) => {
         return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
       },
     });
 
     lenisRef.current = lenis;
-    let rafId = 0;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-
-    rafId = requestAnimationFrame(raf);
+    lenis.resize();
 
     return () => {
-      cancelAnimationFrame(rafId);
+      lenis.stop();
       lenis.destroy();
       lenisRef.current = null;
     };
   }, []);
 
   useEffect(() => {
-    lenisRef.current?.scrollTo(0, { immediate: true });
+    const lenis = lenisRef.current;
+
+    if (!lenis) {
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    lenis.stop();
+
+    const frameId = requestAnimationFrame(() => {
+      lenis.scrollTo(0, { immediate: true, force: true });
+      window.scrollTo(0, 0);
+      lenis.resize();
+      lenis.start();
+    });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+    };
   }, [pathname]);
 
   return <>{children}</>;

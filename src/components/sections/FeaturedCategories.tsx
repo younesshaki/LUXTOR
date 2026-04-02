@@ -1,26 +1,28 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { featuredCategories } from "@/data/categories";
+import { Link } from "@/i18n/navigation";
 import { slideInVariants } from "@/lib/animations";
 
 export function FeaturedCategories() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations();
 
   return (
     <Section variant="cream">
       <Container>
         <SectionHeading
-          label="Collections"
-          title="Curated for Your Home"
-          description="Explore our carefully selected collections, each designed to bring a unique character to your living spaces."
+          label={t("home.featuredCategories.label")}
+          title={t("home.featuredCategories.title")}
+          description={t("home.featuredCategories.description")}
         />
 
         <motion.div
@@ -39,12 +41,12 @@ export function FeaturedCategories() {
           }}
         >
           {featuredCategories.map((cat, i) => (
-            <motion.div key={cat.title} custom={i} variants={slideInVariants}>
+            <motion.div key={cat.titleKey} custom={i} variants={slideInVariants}>
               <Link href={cat.href} className="group block">
                 <motion.div className="relative aspect-[3/4] overflow-hidden bg-brand-sand/20 rounded-sm mb-5">
                   <Image
                     src={cat.image}
-                    alt={cat.title}
+                    alt={t(cat.titleKey)}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -55,10 +57,10 @@ export function FeaturedCategories() {
                   </motion.div>
                 </motion.div>
                 <h3 className="font-heading text-xl md:text-2xl text-brand-black mb-1">
-                  {cat.title}
+                  {t(cat.titleKey)}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  {cat.description}
+                  {t(cat.descriptionKey)}
                 </p>
               </Link>
             </motion.div>

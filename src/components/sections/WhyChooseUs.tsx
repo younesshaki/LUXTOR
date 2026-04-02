@@ -2,30 +2,33 @@
 
 import { motion } from "framer-motion";
 import { Ruler, Gem, Wrench, MessageCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { FadeInStagger, staggerItem } from "@/components/shared/MotionWrapper";
-import { whyChooseUs } from "@/data/categories";
+import { whyChooseUsKeys } from "@/data/categories";
 
 const icons = [Ruler, Gem, Wrench, MessageCircle];
 
 export function WhyChooseUs() {
+  const t = useTranslations();
+
   return (
     <Section>
       <Container>
         <SectionHeading
-          label="Why LUXTOR"
-          title="The LUXTOR Difference"
-          description="We don't just sell window treatments. We create experiences that elevate how you live."
+          label={t("home.whyChooseUs.label")}
+          title={t("home.whyChooseUs.title")}
+          description={t("home.whyChooseUs.description")}
         />
 
         <FadeInStagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-          {whyChooseUs.map((item, i) => {
+          {whyChooseUsKeys.map((item, i) => {
             const Icon = icons[i];
             return (
               <motion.div
-                key={item.title}
+                key={item.titleKey}
                 variants={staggerItem}
                 className="text-center group"
               >
@@ -33,10 +36,10 @@ export function WhyChooseUs() {
                   <Icon className="h-6 w-6 text-brand-bronze" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-heading text-xl md:text-2xl text-brand-black mb-3">
-                  {item.title}
+                  {t(item.titleKey)}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  {item.description}
+                  {t(item.descriptionKey)}
                 </p>
               </motion.div>
             );

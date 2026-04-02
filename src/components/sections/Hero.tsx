@@ -1,20 +1,19 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, cubicBezier } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/layout/Container";
+import { HeroQuoteForm } from "./HeroQuoteForm";
+import { Link } from "@/i18n/navigation";
 
 interface Slide {
   id: number;
-  label: string;
-  heading: string;
-  description: string;
-  ctaText: string;
+  key: "slide1" | "slide2" | "slide3";
   ctaHref: string;
   ctaVariant?: "default" | "red";
   image: string;
@@ -24,30 +23,21 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 1,
-    label: "Premium Linen Collection",
-    heading: "Luxurious Curtains",
-    description: "Refined light control paired with timeless elegance for every window.",
-    ctaText: "Shop Now",
+    key: "slide1",
     ctaHref: "/collections",
     image: "/images/3HLinen_Beige_Natural_Pencil_Pleat_Curtains_Unlined.webp",
     imageAlt: "Premium Linen Beige Curtains",
   },
   {
     id: 2,
-    label: "Designer Window Treatments",
-    heading: "Curated Elegance",
-    description: "Transform your space with our handpicked collection of premium fabrics and designs.",
-    ctaText: "Discover",
+    key: "slide2",
     ctaHref: "/collections",
     image: "/images/EMILE_0139_WEB.webp",
     imageAlt: "Designer Window Treatment",
   },
   {
     id: 3,
-    label: "Room Darkening Solutions",
-    heading: "Yellow Beige Sophistication",
-    description: "Perfect for any room. Quality crafted with precision, designed for your comfort.",
-    ctaText: "Explore Collection",
+    key: "slide3",
     ctaHref: "/collections",
     image: "/images/rosenmandel-room-darkening-curtains-1-pair-yellow-beige-with-heading-tape__1149270_pe887138_s5.avif",
     imageAlt: "Room Darkening Yellow Beige Curtains",
@@ -71,43 +61,48 @@ const textVariants = {
 
 export function Hero() {
   const [current, setCurrent] = useState(0);
+  const [previous, setPrevious] = useState<number | null>(null);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [paused, setPaused] = useState(false);
   const imageRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("home.hero");
 
   const slide = slides[current];
+  const previousSlide = previous !== null ? slides[previous] : null;
+
+  const transitionTo = useCallback(
+    (nextIndex: number, nextDirection: 1 | -1) => {
+      if (nextIndex === current) {
+        return;
+      }
+
+      setPrevious(current);
+      setDirection(nextDirection);
+      setCurrent(nextIndex);
+    },
+    [current]
+  );
 
   useEffect(() => {
     if (paused) return;
 
     const timer = setInterval(() => {
-      setCurrent((prev) => {
-        const next = (prev + 1) % slides.length;
-        setDirection(1);
-        return next;
-      });
+      transitionTo((current + 1) % slides.length, 1);
     }, 6000);
 
     return () => clearInterval(timer);
-  }, [paused]);
+  }, [current, paused, transitionTo]);
 
   const goToSlide = (index: number) => {
-    if (index > current) {
-      setDirection(1);
-    } else if (index < current) {
-      setDirection(-1);
-    }
-    setCurrent(index);
+    transitionTo(index, index > current ? 1 : -1);
   };
 
   const goToPrev = () => {
-    setDirection(-1);
-    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+    transitionTo((current - 1 + slides.length) % slides.length, -1);
   };
 
   const goToNext = () => {
-    setDirection(1);
-    setCurrent((prev) => (prev + 1) % slides.length);
+    transitionTo((current + 1) % slides.length, 1);
   };
 
   return (
@@ -119,38 +114,65 @@ export function Hero() {
     >
       {/* Background image carousel with parallax */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <AnimatePresence mode="wait">
+        {previousSlide ? (
           <motion.div
-            key={slide.id}
-            initial={{ opacity: 0, scale: 1.02 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
+            key={`previous-${previousSlide.id}`}
+            initial={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 0, scale: 1.02 }}
+            transition={{ duration: 1.15, ease: "easeInOut" }}
+            onAnimationComplete={() => {
+              setPrevious((activePrevious) =>
+                activePrevious === previous ? null : activePrevious
+              );
+            }}
             className="absolute inset-0"
-            ref={imageRef}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-black/70 via-brand-black/40 to-transparent z-10" />
-            <motion.div
-              className="absolute inset-0"
-              animate={{ y: paused ? 0 : [0, -20, 0] }}
-              transition={{
-                duration: 6,
-                ease: "easeInOut",
-                repeat: Infinity,
-              }}
-            >
+            <div className="absolute inset-0 z-10 bg-black/28" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-r from-brand-black/72 via-brand-black/42 to-brand-black/24" />
+            <div className="absolute inset-0">
               <Image
-                src={slide.image}
-                alt={slide.imageAlt}
+                src={previousSlide.image}
+                alt={previousSlide.imageAlt}
                 fill
                 className="object-cover"
-                priority={current === 0}
+                priority={false}
                 sizes="100vw"
                 quality={90}
               />
-            </motion.div>
+            </div>
           </motion.div>
-        </AnimatePresence>
+        ) : null}
+
+        <motion.div
+          key={slide.id}
+          initial={{ opacity: 0.35, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.15, ease: "easeInOut" }}
+          className="absolute inset-0"
+          ref={imageRef}
+        >
+          <div className="absolute inset-0 z-10 bg-black/28" />
+          <div className="absolute inset-0 z-10 bg-gradient-to-r from-brand-black/72 via-brand-black/42 to-brand-black/24" />
+          <motion.div
+            className="absolute inset-0"
+            animate={{ y: paused ? 0 : [0, -20, 0] }}
+            transition={{
+              duration: 6,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+          >
+            <Image
+              src={slide.image}
+              alt={slide.imageAlt}
+              fill
+              className="object-cover"
+              priority={current === 0}
+              sizes="100vw"
+              quality={90}
+            />
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Main content grid */}
@@ -173,7 +195,7 @@ export function Hero() {
                   initial="hidden"
                   animate="visible"
                 >
-                  {slide.label}
+                  {t(`${slide.key}.label`)}
                 </motion.p>
 
                 <motion.h1
@@ -183,7 +205,7 @@ export function Hero() {
                   initial="hidden"
                   animate="visible"
                 >
-                  {slide.heading}
+                  {t(`${slide.key}.heading`)}
                 </motion.h1>
 
                 <motion.p
@@ -193,7 +215,7 @@ export function Hero() {
                   initial="hidden"
                   animate="visible"
                 >
-                  {slide.description}
+                  {t(`${slide.key}.description`)}
                 </motion.p>
 
                 <motion.div
@@ -213,7 +235,7 @@ export function Hero() {
                       "text-white rounded-none uppercase tracking-wider text-xs h-13 px-8 transition-all duration-300 hover:shadow-lg"
                     )}
                   >
-                    {slide.ctaText}
+                    {t(`${slide.key}.cta`)}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </motion.div>
@@ -233,35 +255,7 @@ export function Hero() {
 
           {/* Right side - quote form panel (desktop only) */}
           <div className="hidden lg:block">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8">
-              <h3 className="font-heading text-xl text-white mb-6">
-                Book a <span className="font-bold">FREE</span> MEASURE & QUOTE
-              </h3>
-              <p className="text-sm text-white/70 mb-6">
-                Get expert advice tailored to your space. No obligation, completely free.
-              </p>
-              {/* Form placeholder - will be replaced with HeroQuoteForm component */}
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your Name *"
-                  className="w-full bg-white/10 border border-white/20 text-white placeholder-white/50 px-4 py-3 rounded-sm text-sm focus:outline-none focus:ring-2 focus:ring-brand-bronze"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address *"
-                  className="w-full bg-white/10 border border-white/20 text-white placeholder-white/50 px-4 py-3 rounded-sm text-sm focus:outline-none focus:ring-2 focus:ring-brand-bronze"
-                />
-                <input
-                  type="text"
-                  placeholder="Suburb *"
-                  className="w-full bg-white/10 border border-white/20 text-white placeholder-white/50 px-4 py-3 rounded-sm text-sm focus:outline-none focus:ring-2 focus:ring-brand-bronze"
-                />
-                <button className="w-full bg-brand-bronze hover:bg-brand-bronze/90 text-white uppercase tracking-wider text-xs py-3 rounded-sm transition-colors">
-                  Get Free Quote
-                </button>
-              </div>
-            </div>
+            <HeroQuoteForm variant="panel" />
           </div>
         </div>
       </Container>
@@ -274,7 +268,7 @@ export function Hero() {
             <motion.button
               key={index}
               onClick={() => goToSlide(index)}
-              aria-label={`Go to slide ${index + 1}`}
+              aria-label={t("goToSlide", { number: index + 1 })}
               className={cn(
                 "rounded-full transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-brand-bronze focus-visible:ring-offset-2",
                 current === index
@@ -293,14 +287,14 @@ export function Hero() {
         <div className="hidden sm:flex gap-3">
           <button
             onClick={goToPrev}
-            aria-label="Previous slide"
+            aria-label={t("previousSlide")}
             className="p-2 text-white hover:text-brand-bronze transition-colors focus-visible:ring-2 focus-visible:ring-brand-bronze focus-visible:ring-offset-2 outline-none rounded-sm"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button
             onClick={goToNext}
-            aria-label="Next slide"
+            aria-label={t("nextSlide")}
             className="p-2 text-white hover:text-brand-bronze transition-colors focus-visible:ring-2 focus-visible:ring-brand-bronze focus-visible:ring-offset-2 outline-none rounded-sm"
           >
             <ChevronRight className="h-5 w-5" />

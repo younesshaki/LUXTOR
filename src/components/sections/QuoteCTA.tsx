@@ -1,14 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { FadeIn } from "@/components/shared/MotionWrapper";
+import { Link } from "@/i18n/navigation";
 
 export function QuoteCTA() {
+  const t = useTranslations("home.quoteCTA");
+  const [titleLineOne, titleLineTwo] = t("title").split("\n");
+
   return (
     <Section variant="dark" headerTheme="dark" className="relative overflow-hidden">
       {/* Decorative elements */}
@@ -19,21 +23,23 @@ export function QuoteCTA() {
         <div className="max-w-3xl mx-auto text-center">
           <FadeIn>
             <p className="text-xs uppercase tracking-[0.25em] text-brand-sand mb-4">
-              Start Your Project
+              {t("label")}
             </p>
           </FadeIn>
           <FadeIn delay={0.1}>
             <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight mb-6">
-              Let&apos;s Create Something
-              <br />
-              <span className="text-brand-sand">Beautiful Together</span>
+              {titleLineOne}
+              {titleLineTwo ? (
+                <>
+                  <br />
+                  <span className="text-brand-sand">{titleLineTwo}</span>
+                </>
+              ) : null}
             </h2>
           </FadeIn>
           <FadeIn delay={0.2}>
             <p className="text-base md:text-lg text-white/60 leading-relaxed max-w-xl mx-auto mb-10">
-              Book a free consultation with our design experts. We&apos;ll visit your
-              space, understand your vision, and craft a personalized solution just for
-              you.
+              {t("description")}
             </p>
           </FadeIn>
           <FadeIn delay={0.3}>
@@ -45,7 +51,7 @@ export function QuoteCTA() {
                   "bg-brand-bronze hover:bg-brand-bronze/90 text-white rounded-none uppercase tracking-wider text-xs h-13 px-10"
                 )}
               >
-                Request a Free Quote
+                {t("requestQuote")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link
@@ -55,7 +61,7 @@ export function QuoteCTA() {
                   "border-white/20 text-white hover:bg-white/10 rounded-none uppercase tracking-wider text-xs h-13 px-10 bg-transparent"
                 )}
               >
-                Contact Us
+                {t("contactUs")}
               </Link>
             </div>
           </FadeIn>

@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { QuoteCTA } from "@/components/sections/QuoteCTA";
-
-export const metadata: Metadata = {
-  title: "Home Accessories",
-  description:
-    "Premium accessories for your window treatments and home decor. Hardware, fabrics, tiebacks, and more from LUXTOR.",
-};
+import { getPublicPageMetadata } from "@/lib/i18n/metadata";
 
 const accessories = [
   { src: "/images/accessories/accessory-1.jpg", alt: "Decorative curtain tieback detail in a refined interior" },
@@ -20,21 +16,30 @@ const accessories = [
   { src: "/images/accessories/accessory-6.jpg", alt: "Window styling accessories arranged in a polished room setting" },
 ];
 
-export default function AccessoriesPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return getPublicPageMetadata(locale, "accessories");
+}
+
+export default async function AccessoriesPage() {
+  const t = await getTranslations("accessories");
+
   return (
     <>
-      {/* Page header */}
       <Section className="pt-36 md:pt-44 pb-12 md:pb-16" variant="cream">
         <Container>
           <SectionHeading
-            label="Complete Your Design"
-            title="Home Accessories"
-            description="Explore our curated selection of premium accessories including hardware, tracks, tiebacks, and specialty fabrics to complete your interior vision."
+            label={t("heading.label")}
+            title={t("heading.title")}
+            description={t("heading.description")}
           />
         </Container>
       </Section>
 
-      {/* Accessories grid */}
       <Section>
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

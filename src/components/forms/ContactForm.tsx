@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useState } from "react";
 import { CheckCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,8 @@ import { useLeadSubmission } from "@/components/forms/useLeadSubmission";
 export function ContactForm() {
   const { loading, error, result, setError, submitSubmission } = useLeadSubmission();
   const [turnstileToken, setTurnstileToken] = useState("");
+  const t = useTranslations();
+  const tForms = useTranslations("forms");
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -70,13 +73,15 @@ export function ContactForm() {
     return (
       <div className="rounded-sm border border-brand-sand/20 bg-white p-8 text-center shadow-sm">
         <CheckCircle className="mx-auto mb-4 h-12 w-12 text-brand-bronze" />
-        <h3 className="font-heading text-2xl text-brand-black">Message received</h3>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{result.message}</p>
+        <h3 className="font-heading text-2xl text-brand-black">{tForms("messageReceived")}</h3>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          {tForms("contactReceivedDescription")}
+        </p>
         {result.suggestAccountCreation ? (
           <p className="mt-4 text-sm text-brand-charcoal">
-            Want to keep track of your requests?{" "}
+            {tForms("keepTrackRequests")}{" "}
             <Link href="/account/register" className="text-brand-bronze underline underline-offset-4">
-              Create an account
+              {tForms("createAccount")}
             </Link>
             .
           </p>
@@ -90,7 +95,7 @@ export function ContactForm() {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-full-name" className="mb-2 block text-xs uppercase tracking-wider text-muted-foreground">
-            Full Name
+            {tForms("fullName")}
           </label>
           <Input
             id="contact-full-name"
@@ -98,13 +103,13 @@ export function ContactForm() {
             value={formData.fullName}
             onChange={handleChange}
             required
-            placeholder="Your name"
+            placeholder={tForms("placeholderName")}
             className="h-12 rounded-none border-brand-sand/40 focus:border-brand-bronze"
           />
         </div>
         <div>
           <label htmlFor="contact-email" className="mb-2 block text-xs uppercase tracking-wider text-muted-foreground">
-            Email Address
+            {tForms("emailAddress")}
           </label>
           <Input
             id="contact-email"
@@ -113,7 +118,7 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            placeholder="your@email.com"
+            placeholder={tForms("placeholderEmail")}
             className="h-12 rounded-none border-brand-sand/40 focus:border-brand-bronze"
           />
         </div>
@@ -122,7 +127,7 @@ export function ContactForm() {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-phone" className="mb-2 block text-xs uppercase tracking-wider text-muted-foreground">
-            Phone Number
+            {tForms("phoneNumber")}
           </label>
           <Input
             id="contact-phone"
@@ -130,20 +135,20 @@ export function ContactForm() {
             type="tel"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="(555) 123-4567"
+            placeholder={tForms("placeholderPhone")}
             className="h-12 rounded-none border-brand-sand/40 focus:border-brand-bronze"
           />
         </div>
         <div>
           <label htmlFor="contact-suburb" className="mb-2 block text-xs uppercase tracking-wider text-muted-foreground">
-            Suburb / Area
+            {tForms("suburb")}
           </label>
           <Input
             id="contact-suburb"
             name="suburb"
             value={formData.suburb}
             onChange={handleChange}
-            placeholder="Your suburb"
+            placeholder={tForms("placeholderSuburb")}
             className="h-12 rounded-none border-brand-sand/40 focus:border-brand-bronze"
           />
         </div>
@@ -151,7 +156,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="contact-service" className="mb-2 block text-xs uppercase tracking-wider text-muted-foreground">
-          Service Interested In
+          {tForms("serviceInterest")}
         </label>
         <select
           id="contact-service"
@@ -160,10 +165,10 @@ export function ContactForm() {
           onChange={handleChange}
           className="flex h-12 w-full rounded-none border border-brand-sand/40 bg-transparent px-3 py-1 text-sm transition-colors focus-visible:border-brand-bronze focus-visible:outline-none"
         >
-          <option value="">General enquiry</option>
+          <option value="">{tForms("generalEnquiry")}</option>
           {serviceOptions.map((option) => (
             <option key={option.value} value={option.value}>
-              {option.label}
+              {t(option.labelKey)}
             </option>
           ))}
         </select>
@@ -171,7 +176,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="contact-message" className="mb-2 block text-xs uppercase tracking-wider text-muted-foreground">
-          Message
+          {tForms("message")}
         </label>
         <Textarea
           id="contact-message"
@@ -180,14 +185,14 @@ export function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           required
-          placeholder="Tell us how we can help..."
+          placeholder={tForms("placeholderContactMessage")}
           className="resize-none rounded-none border-brand-sand/40 focus:border-brand-bronze"
         />
       </div>
 
       <TurnstileField onTokenChange={handleTokenChange} />
 
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      {error ? <p className="text-sm text-red-600">{error || tForms("saveError")}</p> : null}
 
       <Button
         type="submit"
@@ -195,7 +200,7 @@ export function ContactForm() {
         disabled={loading}
         className="w-full bg-brand-bronze text-white hover:bg-brand-bronze/90 sm:w-auto"
       >
-        {loading ? "Sending..." : "Send Message"}
+        {loading ? tForms("sending") : tForms("sendMessage")}
       </Button>
     </form>
   );

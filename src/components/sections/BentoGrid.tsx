@@ -1,17 +1,15 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { motion, cubicBezier } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { ArrowRight } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 
 const customEase = cubicBezier(0.25, 0.46, 0.45, 0.94);
-const testimonialQuote =
-  "\"They understood my vision and brought it to life perfectly. Exceptional quality and service.\"";
-
 const bentoVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.95 },
   visible: (i: number) => ({
@@ -28,6 +26,7 @@ const bentoVariants = {
 
 export function BentoGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("home.bentoGrid");
 
   return (
     <Section variant="cream">
@@ -51,14 +50,14 @@ export function BentoGrid() {
             <div className="relative aspect-square md:aspect-auto md:h-[500px] overflow-hidden bg-brand-sand/20 rounded-lg group">
               <Image
                 src="/images/accessories/accessory-4.jpg"
-                alt="Craftsmanship"
+                alt={t("craftsmanshipAlt")}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-black/60 via-transparent to-transparent flex items-end p-4 md:p-8">
                 <h3 className="font-heading text-2xl md:text-3xl text-white">
-                  Timeless Craftsmanship
+                  {t("craftsmanshipTitle")}
                 </h3>
               </div>
             </div>
@@ -74,10 +73,10 @@ export function BentoGrid() {
                 transition={{ delay: 0.3, duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                15+
+                {t("yearsValue")}
               </motion.p>
               <p className="text-sm md:text-base text-brand-charcoal/70">
-                Years of Excellence
+                {t("yearsLabel")}
               </p>
             </div>
           </motion.div>
@@ -92,10 +91,10 @@ export function BentoGrid() {
                 transition={{ delay: 0.4, duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                2K+
+                {t("homesValue")}
               </motion.p>
               <p className="text-sm md:text-base text-brand-charcoal/70">
-                Homes Transformed
+                {t("homesLabel")}
               </p>
             </div>
           </motion.div>
@@ -105,18 +104,17 @@ export function BentoGrid() {
             <div className="bg-brand-charcoal rounded-lg p-6 md:p-8 h-full flex flex-col justify-between text-white hover:shadow-lg transition-shadow duration-300">
               <div>
                 <h3 className="font-heading text-2xl md:text-3xl mb-3">
-                  Made to Measure
+                  {t("madeToMeasureTitle")}
                 </h3>
                 <p className="text-white/70 text-sm md:text-base mb-6">
-                  Every design is custom-crafted to match your exact measurements
-                  and aesthetic vision.
+                  {t("madeToMeasureDescription")}
                 </p>
               </div>
               <Link
                 href="/quote"
                 className="inline-flex items-center gap-2 text-brand-sand hover:text-brand-bronze transition-colors text-sm font-medium group"
               >
-                Get Your Quote
+                {t("getYourQuote")}
                 <motion.span
                   className="inline-block"
                   whileHover={{ x: 4 }}
@@ -132,10 +130,10 @@ export function BentoGrid() {
           <motion.div className="col-span-2" custom={4} variants={bentoVariants}>
             <div className="bg-white rounded-lg p-6 md:p-8 border-l-4 border-brand-bronze shadow-sm hover:shadow-md transition-shadow duration-300">
               <p className="font-heading text-lg md:text-xl text-brand-charcoal mb-4 italic">
-                {testimonialQuote}
+                {t("testimonialQuote")}
               </p>
               <p className="text-sm text-brand-charcoal/60 font-medium">
-                — Sarah M., Los Angeles
+                {t("testimonialAuthor")}
               </p>
             </div>
           </motion.div>

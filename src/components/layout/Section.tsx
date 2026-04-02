@@ -15,10 +15,12 @@ export function Section({
   variant = "default",
   headerTheme,
 }: SectionProps) {
+  const resolvedHeaderTheme = headerTheme ?? (variant === "dark" ? "dark" : "light");
+
   return (
     <section
       id={id}
-      data-header-theme={headerTheme}
+      data-header-theme={resolvedHeaderTheme}
       className={cn(
         "section-padding",
         {

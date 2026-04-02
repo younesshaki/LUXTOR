@@ -1,64 +1,69 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { QuoteCTA } from "@/components/sections/QuoteCTA";
-
-export const metadata: Metadata = {
-  title: "Last Chance Deals",
-  description:
-    "LUXTOR private sale. Members only exclusive deals. Up to 50% off premium curtains, blinds, and home decor.",
-};
+import { getPublicPageMetadata } from "@/lib/i18n/metadata";
 
 const saleItems = [
   {
     src: "/images/EMILE_0139_WEB.webp",
     alt: "Discounted designer curtain panel in a warm neutral setting",
-    title: "Designer Curtains",
+    titleKey: "items.designerCurtains",
   },
   {
     src: "/images/blinds/blind-5.jpg",
     alt: "Sale blinds collection with soft daylight filtering through slats",
-    title: "Modern Blinds",
+    titleKey: "items.modernBlinds",
   },
   {
     src: "/images/awnings/awning-2.webp",
     alt: "Retractable awning featured in the seasonal sale collection",
-    title: "Outdoor Awnings",
+    titleKey: "items.outdoorAwnings",
   },
   {
     src: "/images/pergolas/pergola-2.jpg",
     alt: "Pergola promotion featuring a premium louvre outdoor structure",
-    title: "Pergola Systems",
+    titleKey: "items.pergolaSystems",
   },
   {
     src: "/images/accessories/accessory-5.jpg",
     alt: "Decor accessories styled as part of the private sale",
-    title: "Home Accessories",
+    titleKey: "items.homeAccessories",
   },
   {
     src: "/images/inspiration/inspiration-6.jpg",
     alt: "Soft sheer drapery featured in the last chance collection",
-    title: "Sheers & Voiles",
+    titleKey: "items.sheersVoiles",
   },
 ];
 
-export default function SalePage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return getPublicPageMetadata(locale, "sale");
+}
+
+export default async function SalePage() {
+  const t = await getTranslations();
+
   return (
     <>
-      {/* Page header */}
       <Section className="pt-36 md:pt-44 pb-12 md:pb-16 bg-red-50">
         <Container>
           <SectionHeading
-            label="Exclusive Members Only"
-            title="Last Chance Deals"
-            description="Premium collections at exceptional prices. Limited quantities on clearance items and seasonal sales."
+            label={t("sale.heading.label")}
+            title={t("sale.heading.title")}
+            description={t("sale.heading.description")}
           />
         </Container>
       </Section>
 
-      {/* Sale items grid */}
       <Section>
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -76,10 +81,10 @@ export default function SalePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-black/65 via-brand-black/10 to-transparent" />
                 <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] tracking-[0.25em] uppercase px-3 py-1 rounded-full">
-                  Sale
+                  {t("common.saleBadge")}
                 </div>
                 <div className="absolute bottom-5 left-5 right-5">
-                  <p className="text-white text-lg font-heading">{item.title}</p>
+                  <p className="text-white text-lg font-heading">{t(`sale.${item.titleKey}`)}</p>
                 </div>
               </div>
             ))}
